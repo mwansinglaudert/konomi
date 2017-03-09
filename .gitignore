@@ -4,3 +4,4 @@ node_modules
 build
 .DS_Store
 /deploy.js
+functions/db.php
