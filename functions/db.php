@@ -1,9 +1,5 @@
 <?php
-
-$host = "127.0.0.1";
-$user = "user";
-$pwd = "pass";
-$dbn = 'konomi';
+include "../db.php";
 
 $msg_connect = "Verbindung zur Datenbank konnte nicht hergestellt werden";
 $msg_db = "Datenbank konnte nicht ausgewählt werden";
