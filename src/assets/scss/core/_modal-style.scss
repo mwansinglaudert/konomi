@@ -1,0 +1,101 @@
+.modal {
+  background: #fff;
+  font-size: $font-size-normal;
+}
+.modal-content {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f5f5f5;
+  ._scroll {
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  ._standalone & {
+    top: 64px;
+  }
+}
+.modal-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 44px;
+  pointer-events: none;
+}
+.modal-action {
+  height: 44px;
+  line-height: 43px;
+  @include clearfix;
+
+  &-top {
+    border-bottom: 1px solid $grey;
+  }
+  &-bottom {
+    position: absolute;
+    border-top: 1px solid $grey;
+    top:100%;
+    left: 0;
+    right: 0;
+  }
+
+  button{
+    height: 44px;
+    line-height: 43px;
+    font-size: $font-size-small;
+    color: $text-color-grey;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+    appearance: none;
+    border:none;
+    background: transparent;
+    padding: 0px 15px;
+    &.btn-brand {color: $brand-color;}
+    &.btn-red {color: $danger;}
+  }
+}
+.chevron {
+  display: inline-block;
+  width: 1.25em;
+  height: 0.35em;
+  vertical-align: middle;
+  position: relative;
+  left: -5px;
+  font-size: 9px;
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top:0;
+    left:0;
+    right: 0;
+    bottom:0;
+    background: $brand-color;
+    display: block;
+  }
+  &:before {
+    transform: rotate(45deg) translateX(0.45em);
+  }
+  &:after {
+  transform:rotate(315deg) translateX(0.5em);
+  }
+}
+
+.modal-headline {
+  padding: 0;
+  margin: 0 0 10px;
+  letter-spacing: 0.05em;
+  color: $brand-color;
+  font-size: $font-size-normal;
+}

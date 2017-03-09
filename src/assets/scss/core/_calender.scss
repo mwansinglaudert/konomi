@@ -1,0 +1,10 @@
+.calender {
+  .ios-list {
+    margin-bottom: 20px;
+  }
+  li > a {
+    font-size: $font-size-small;
+    text-decoration: none;
+    color: $text-color;
+  }
+}

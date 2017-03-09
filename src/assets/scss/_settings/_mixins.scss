@@ -1,0 +1,20 @@
+@mixin stretch($position: absolute){
+  position: $position;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+}
+
+@mixin clearfix(){
+  &:after,
+  &:before {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+@mixin pull($dir:left){
+  float:$dir !important;
+}

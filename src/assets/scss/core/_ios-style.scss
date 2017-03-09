@@ -1,0 +1,196 @@
+.ios-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45px;
+  text-align: center;
+  line-height: 44px;
+  border-bottom: 1px solid #eee;
+  font-size: 17px;
+  font-weight: 500;
+  ._standalone & {
+    height: 65px;
+    border-top: 20px solid $brand-color;
+  }
+
+  &-brand {
+    color: #fff;
+    background: $brand-color;
+  }
+
+  &-name {
+    position: absolute;
+    z-index: 1;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom:0;
+  }
+}
+.ion-btn {
+  display: block;
+  line-height: 44px;
+  appearance:none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  min-width: 44px;
+  font-size: 2em;
+  color: currentColor;
+  position: relative;
+  z-index: 2;
+
+  .ion-text {
+    font-size: $font-size-small;
+    line-height: 42px;
+    display: block;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 0px 10px;
+  }
+}
+
+.ios-segmented-controls {
+  @include clearfix;
+  padding: 8px 10px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+
+  label {
+    float: left;
+    padding: 5px;
+    font-size: $font-size-small;
+    color: $brand-color;
+    text-align: center;
+    border: 1px solid $brand-color;
+    &:first-child {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+    &:last-child {
+         border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+
+  & ~ ._scroll {
+    top: 44px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+[data-segmented-content],
+[data-segmented-control]{
+   display: none;
+ }
+
+%activeControl {
+  display:block;
+}
+
+%activeLabel {
+  background: $brand-color;
+  color: #fff;
+}
+
+@for $i from 1 through 4 {
+  [data-segmented-control="#{$i}"]:checked ~ [data-segmented-parent] [data-segmented-content="#{$i}"]{
+    @extend %activeControl;
+  }
+  [data-segmented-control="#{$i}"]:checked ~ .ios-segmented-controls label:nth-child(#{$i}){
+    @extend %activeLabel;
+  }
+}
+
+@for $i from 1 through 4 {
+  .ios-segmented-controls label:nth-last-child(n+#{$i}),
+  .ios-segmented-controls label:nth-last-child(n+#{$i}) ~ label {
+     width: percentage(1/$i);
+  }
+}
+.ttt {
+  font-size: $font-size-normal;
+}
+.ios-list {
+  border: 0px solid #eee;
+  border-width: 1px 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin: 0 -20px;
+  background: #fff;
+
+  & + & {
+    margin-top: 10px;
+  }
+}.ios-padding {
+  padding: 15px 20px;
+  &-bottom {
+    padding-bottom: 0;
+  }
+ }
+.ios-text-input {
+  padding: 10px 20px;
+  position: relative;
+
+  &+&:before {
+    content: '';
+    height:1px;
+    background: #eee;
+    position: absolute;
+    top:0;
+    left: 10px;
+    right: 0;
+  }
+  input {
+    appearance:none;
+    padding: 0;
+    border: none;
+    line-height: 24px;
+    height: 24px;
+    border-radius: 0;
+    display: block;
+    font-size: $font-size-small;
+    width:100%;
+  }
+  &-brand input {
+    color: $brand-color;
+  }
+  input:valid + span {
+    display: none;
+  }
+  span {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    line-height: 20px;
+    left:20px;
+    font-size: $font-size-small;
+    font-weight: 500;
+    color: $text-color-grey;
+    padding: 2px 0;
+    right: 20px;
+    pointer-events: none;
+  }
+}
+.ios-text-link {
+  position: relative;
+  a {
+    padding: 10px 20px;
+    position: relative;
+    display: block;
+  }
+
+  &+&:before {
+    content: '';
+    height:1px;
+    background: #eee;
+    position: absolute;
+    top:0;
+    left: 10px;
+    right: 0;
+  }
+}
+
+

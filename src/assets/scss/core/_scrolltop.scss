@@ -1,0 +1,12 @@
+.js-scrolltop {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  margin-left: -3em;
+  width: 6em;
+  height: 64px;
+  display: none;
+  ._standalone &{
+    display: block;
+  }
+}

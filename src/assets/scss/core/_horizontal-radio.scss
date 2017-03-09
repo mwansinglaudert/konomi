@@ -1,0 +1,54 @@
+.horizontal-radio {
+  font-size: 0;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+  margin: 0 -20px;
+  padding: 0 20px;
+
+  .radio {
+    display: inline-block;
+    font-size: $font-size-normal;
+    margin: 0;
+    margin-bottom: 25px;
+
+    &:not(:first-child){
+      margin-left: 10px;
+    }
+    input {
+      display: none;
+      visibility: hidden;
+    }
+    label {
+      width: 72px;
+      height: 72px;
+      display: block;
+      position: relative;
+      border: 1px solid #eee;
+      span {
+        position: absolute;
+        top:100%;
+        font-size: $font-size-small;
+        left: 0;
+        right: 0;
+        display: block;
+        padding: 4px 0;
+        text-align: center;
+      }
+      .template-sprite {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        pointer-events: none;
+      }
+    }
+    input:checked + label {
+      border: 1px solid $brand-color;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  touch-action: manipulation;
+}
+body {
+  font-size: $font-size-normal;
+  color: $text-color;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  background: $body-bg-color;
+  font-family: $font;
+}
+
+small {
+  font-size: $font-size-small;
+}
+
+._scroll {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pull-left {
+  @include pull();
+}
+.pull-right {
+  @include pull(right);
+}
