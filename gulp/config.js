@@ -100,6 +100,7 @@ module.exports = {
                 'dist/**/**.*',
                 'functions/**/**.*',
                 'templates/**/**.*',
+                'db.php',
                 'index.php']
         },
         removeBuildFiles: {
