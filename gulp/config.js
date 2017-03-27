@@ -3,8 +3,8 @@ var path = require('path');
 var fs = require('fs');
 var os = require('os');
 
-var SRC_PATH = './src/assets';
-var DEST_PATH = './dist/assets';
+var SRC_PATH = './web/src/assets';
+var DEST_PATH = './web/dist/assets';
 
 module.exports = {
     log: true,
@@ -28,7 +28,7 @@ module.exports = {
             tasks: ['img', 'js', 'css']
         },
         browserSync: {
-            proxy: 'dev.app.konomi',
+            proxy: 'dev.mis.app.konomi',
             port: 9000,
             notify: false
         },

@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="">
+        <body>
+            <trans-unit id="app.title">
+                <source>app.title</source>
+                <target>konomi</target>
+            </trans-unit>
+            <trans-unit id="app.currency">
+                <source>app.currency</source>
+                <target>€</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="app.label.username">
+                <source>app.label.username</source>
+                <target>Username</target>
+            </trans-unit>
+            <trans-unit id="app.label.password">
+                <source>app.label.password</source>
+                <target>Password</target>
+            </trans-unit>
+
+            <trans-unit id="app.label.calendar">
+                <source>app.label.calendar</source>
+                <target>Calendar</target>
+            </trans-unit>
+            <trans-unit id="app.label.edit">
+                <source>app.label.edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="app.label.save">
+                <source>app.label.save</source>
+                <target>Save</target>
+            </trans-unit>
+            <trans-unit id="app.label.newLog">
+                <source>app.label.newLog</source>
+                <target>New log</target>
+            </trans-unit>
+            <trans-unit id="app.label.newFixLog">
+                <source>app.label.newFixLog</source>
+                <target>New fix log</target>
+            </trans-unit>
+            <trans-unit id="app.label.existingFixLogs">
+                <source>app.label.existingFixLogs</source>
+                <target>Existing fix logs</target>
+            </trans-unit>
+            <trans-unit id="app.label.sum">
+                <source>app.label.sum</source>
+                <target>Sum in </target>
+            </trans-unit>
+            <trans-unit id="app.label.description">
+                <source>app.label.description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="app.label.createstamp">
+                <source>app.label.createstamp</source>
+                <target>Creation date</target>
+            </trans-unit>
+            <trans-unit id="app.label.loading">
+                <source>app.label.loading</source>
+                <target>loading</target>
+            </trans-unit>
+
+            <trans-unit id="app.label.month.01">
+                <source>app.label.month.01</source>
+                <target>January</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.02">
+                <source>app.label.month.02</source>
+                <target>February</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.03">
+                <source>app.label.month.03</source>
+                <target>March</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.04">
+                <source>app.label.month.04</source>
+                <target>April</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.05">
+                <source>app.label.month.05</source>
+                <target>May</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.06">
+                <source>app.label.month.06</source>
+                <target>June</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.07">
+                <source>app.label.month.07</source>
+                <target>July</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.08">
+                <source>app.label.month.08</source>
+                <target>August</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.09">
+                <source>app.label.month.09</source>
+                <target>September</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.10">
+                <source>app.label.month.10</source>
+                <target>October</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.11">
+                <source>app.label.month.11</source>
+                <target>November</target>
+            </trans-unit>
+            <trans-unit id="app.label.month.12">
+                <source>app.label.month.12</source>
+                <target>December</target>
+            </trans-unit>
+
+            <trans-unit id="app.label.log.code.salary">
+                <source>app.label.log.code.salary</source>
+                <target>Salary</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.ec">
+                <source>app.label.log.code.ec</source>
+                <target>EC</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.food">
+                <source>app.label.log.code.food</source>
+                <target>Food</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.snack">
+                <source>app.label.log.code.snack</source>
+                <target>Snack</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.edeka">
+                <source>app.label.log.code.edeka</source>
+                <target>Edeka</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.kk">
+                <source>app.label.log.code.kk</source>
+                <target>K+K</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.lidl">
+                <source>app.label.log.code.lidl</source>
+                <target>Lidl</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.aldi">
+                <source>app.label.log.code.aldi</source>
+                <target>Aldi</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.drugs">
+                <source>app.label.log.code.drugs</source>
+                <target>Drugs</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.hair">
+                <source>app.label.log.code.hair</source>
+                <target>Hair</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.account">
+                <source>app.label.log.code.account</source>
+                <target>Account</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.rental">
+                <source>app.label.log.code.rental</source>
+                <target>Rental</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.buildingsavings">
+                <source>app.label.log.code.buildingsavings</source>
+                <target>Building Savings</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.insurance">
+                <source>app.label.log.code.insurance</source>
+                <target>Insurance</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.savings">
+                <source>app.label.log.code.savings</source>
+                <target>Savings</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.internet">
+                <source>app.label.log.code.internet</source>
+                <target>Internet</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.mobile">
+                <source>app.label.log.code.mobile</source>
+                <target>Mobile</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.amazon">
+                <source>app.label.log.code.amazon</source>
+                <target>Amazon</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.netflix">
+                <source>app.label.log.code.netflix</source>
+                <target>Netflix</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.spotify">
+                <source>app.label.log.code.spotify</source>
+                <target>Spotify</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.movie">
+                <source>app.label.log.code.movie</source>
+                <target>Movie</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.music">
+                <source>app.label.log.code.music</source>
+                <target>Music</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.sport">
+                <source>app.label.log.code.sport</source>
+                <target>Sport</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.car">
+                <source>app.label.log.code.car</source>
+                <target>Car</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.amfuelazon">
+                <source>app.label.log.code.fuel</source>
+                <target>Fuel</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.dog">
+                <source>app.label.log.code.dog</source>
+                <target>Dog</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.clothing">
+                <source>app.label.log.code.clothing</source>
+                <target>Clothing</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.gift">
+                <source>app.label.log.code.gift</source>
+                <target>Gift</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.party">
+                <source>app.label.log.code.party</source>
+                <target>Party</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.supplements">
+                <source>app.label.log.code.supplements</source>
+                <target>Supplements</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.other">
+                <source>app.label.log.code.other</source>
+                <target>Other</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="app.description.newLog">
+                <source>app.description.newLog</source>
+                <target>Create a new log entry.</target>
+            </trans-unit>
+            <trans-unit id="app.description.newFixLog">
+                <source>app.description.newFixLog</source>
+                <target>Create a new fix entry which is automatically subtracted or added each month.</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="app.button.login">
+                <source>app.button.login</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="app.button.logout">
+                <source>app.button.logout</source>
+                <target>Logout</target>
+            </trans-unit>
+
+            <trans-unit id="app.button.save">
+                <source>app.button.save</source>
+                <target>Save</target>
+            </trans-unit>
+            <trans-unit id="app.button.delete">
+                <source>app.button.delete</source>
+                <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="app.button.income">
+                <source>app.button.income</source>
+                <target>Income</target>
+            </trans-unit>
+            <trans-unit id="app.button.expend">
+                <source>app.button.expend</source>
+                <target>Expend</target>
+            </trans-unit>
+
+            <trans-unit id="app.button.fixexpend">
+                <source>app.button.fixexpend</source>
+                <target>Fix expend</target>
+            </trans-unit>
+            <trans-unit id="app.button.fixincome">
+                <source>app.button.fixincome</source>
+                <target>Fix income</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

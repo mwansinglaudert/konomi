@@ -1,0 +1,302 @@
+{% trans_default_domain "app" %}
+
+
+{% macro login(variables) %}
+    <div class="login">
+        <div class="login-content">
+            <img class="logo" src="dist/assets/img/logo.png" height="96" alt="logo">
+            {% if variables.error %}
+                <div class="login-error">{{ variables.error.messageKey|trans(variables.error.messageData, 'security') }}</div>
+            {% endif %}
+            <form class="js--login-form" action="{{ path('login') }}" method="post">
+                {#<input type="hidden" name="_target_path" value="/overview" />#}
+                <input class="input-user" type="text" id="user" name="_username" placeholder="{% trans %}app.label.username{% endtrans %}" value="{{ variables.last_username }}">
+                <input class="input-password" type="password" id="pass" name="_password" placeholder="{% trans %}app.label.password{% endtrans %}" value="">
+                <button type="submit">{% trans %}app.button.login{% endtrans %}</button>
+            </form>
+        </div>
+    </div>
+{% endmacro login %}
+
+
+{% macro start(variables) %}
+    <div class="dashboard">
+        <div class="ios-header ios-header-brand">
+            <a href="./logout" class="ion-btn pull-left js--ajax" title="Logout '{{ variables.app.user.username }}'">
+                <i class="ion ion-ios-person"></i>
+            </a>
+            <div class="ios-header-name">{% trans %}app.title{% endtrans %}</div>
+            <a class="ion-btn pull-right js-open-ajaxmodal" href="./newfix" title="{% trans %}app.label.newFixLog{% endtrans %}">
+                <i class="ion ion-ios-plus"></i>
+            </a>
+            <a class="ion-btn pull-right js-open-ajaxmodal" href="./new?yearmonth={{ variables.sYearMonth }}" title="{% trans %}app.label.newLog{% endtrans %}">
+                <i class="ion ion-ios-plus-outline"></i>
+            </a>
+        </div>
+        <div class="dashboard-display">
+            <div class="dashboard-hero">
+                <h1 class="dashboard-hero-balance">
+                    <span data-count="{{ variables.iBalance|number_format(2, '.', '') }}" id="balance">0</span>
+                    <span class="dashboard-hero-currency">{% trans %}app.currency{% endtrans %}</span>
+                </h1>
+                <div class="dashboard-hero-date">
+                    <a href="./calendar" class="js-open-ajaxmodal">
+                        <span class="dashboard-hero-month">{{ ('app.label.month.' ~ variables.iMonth)|trans }}</span>
+                        <span class="dashboard-hero-year">{{ variables.iYear }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-log _scroll">
+            <table style="width: 100%">
+                {% for oLog in variables.oLogs %}
+                    <tr>
+                        <td>
+                            <div class="template-sprite template-sprite-circle template-sprite-{{ oLog.code }}"></div>
+                        </td>
+                        <td>
+                            <div style="font-weight: bold;">{{ ('app.label.log.code.' ~ oLog.code)|trans }}</div>
+                            <small>{{ oLog.description }}</small>
+                        </td>
+                        <td style="text-align: right; white-space: nowrap">
+                            {{ oLog.sum|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %}
+                        </td>
+                        <td>
+                            {% if oLog.type == 1 %}<span style="color:green;">&uarr;</span>{% endif %}
+                            {% if oLog.type == 0 %}<span style="color:orangered;">&darr;</span>{% endif %}
+                            {% if oLog.type == -1 %}<span style="color:darkgray;">&darr;</span>{% endif %}
+                            {% if oLog.type == -2 %}<span style="color:green;">&uarr;</span>{% endif %}
+                        </td>
+                        <td><a href="{{ oLog.link }}" class="btn-edit js-open-ajaxmodal"><i class="dot"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endmacro start %}
+
+
+{% macro calendar(variables) %}
+    <div id="ajax-header">
+        {% trans %}app.label.calendar{% endtrans %}
+    </div>
+    <div id="ajax-content">
+        <div class="calender _scroll">
+            {% for iYear, aMonths in variables.aYears %}
+                <h2 class="modal-headline">{{ iYear }}</h2>
+                <ul class="ios-list">
+
+                    {% for iMonth in aMonths %}
+                        <li class="ios-text-link">
+                            <a class="js-calender-link" href="./start?year={{ iYear }}&month={{ iMonth }}">{{ ('app.label.month.' ~ iMonth)|trans }}</a>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            {% endfor %}
+        </div>
+        <script>calender.init();</script>
+    </div>
+{% endmacro calendar %}
+
+
+{% macro edit(variables) %}
+    <div id="ajax-header">
+        {% trans %}app.label.edit{% endtrans %}
+    </div>
+    <div id="ajax-content">
+        <form class="js--post-form" action="./save" method="post">
+            <input type="hidden" name="delete" value="0">
+            <div class="_scroll">
+                <h2 class="modal-headline">{{ ('app.label.log.code.' ~ variables.aParams.sCode)|trans }} <small>({{ variables.aParams.sCreatestamp|date("d-m-Y H:m:i") }})</small></h2>
+                <ul class="ios-list">
+                    {% for sParam, sValue in variables.aParams %}
+                        {% if sParam != 'sUser' and sParam != 'sTimestamp' and sParam != 'iType' %}
+                            {% if sParam == 'iID' or sParam == 'sCode' %}
+                                <input id="edit{{ sParam }}" name="{{ sParam }}" type="hidden" value="{{ sValue }}">
+                            {% else %}
+                                <li class="ios-text-input {% if sParam == 'sSum' %}ios-text-input-brand{% endif %}">
+                                    <input required="required" id="edit{{ sParam }}" name="{{ sParam }}" type="text" value="{{ sValue }}">
+                                    <span for="edit{{ sParam }}">
+                                        {% if sParam == 'sSum' %}
+                                            {% trans %}app.label.sum{% endtrans %}{% trans %}app.currency{% endtrans %}
+                                        {% elseif sParam == 'sDescription' %}
+                                            {% trans %}app.label.description{% endtrans %}
+                                        {% elseif sParam == 'sCreatestamp' %}
+                                            {% trans %}app.label.createstamp{% endtrans %}
+                                        {% endif %}
+                                    </span>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <ul class="ios-list">
+                    <li>
+                        <div class="delete-button-box">
+                            <button class="delete-button js--delete-entry">
+                                {% trans %}app.button.delete{% endtrans %}
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+        <script>postLog.init()</script>
+    </div>
+{% endmacro edit %}
+
+
+{% macro new(variables) %}
+    <div id="ajax-header">
+        {% trans %}app.label.newLog{% endtrans %}
+    </div>
+    <div id="ajax-content">
+        <form class="js--post-form" action="./save" method="post">
+            <input type="hidden" id="saveNew" name="saveNew" value="1">
+            <input type="hidden" id="logImage" name="sCode">
+            <input class="js--log-segmented-control" id="type-01" data-segmented-control="1" value="0" type="radio" checked name="iType">
+            <input class="js--log-segmented-control" id="type-02" data-segmented-control="2" value="1" type="radio" name="iType">
+            <div class="ios-segmented-controls">
+                <label for="type-01">{% trans %}app.button.expend{% endtrans %}</label>
+                <label for="type-02">{% trans %}app.button.income{% endtrans %}</label>
+            </div>
+            <div class="_scroll" data-segmented-parent>
+                <ul class="ios-list">
+                    <li class="ios-padding ios-padding-bottom">
+                        <div class="horizontal-radio _scroll-full" data-segmented-content="1">
+                            {% for iKey, aTemplate in variables.oPublicExpendTemplates %}
+                                <div class="radio">
+                                    <input id="name{{ iKey }}0" type="radio" class="js--template-name" name="sCode" data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
+                                    <label for="name{{ iKey }}0">
+                                        <div class="template-sprite template-sprite-circle template-sprite-{{ aTemplate.code }}"></div>
+                                        <span>{{ ('app.label.log.code.' ~ aTemplate.code)|trans }}</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="horizontal-radio _scroll-full" data-segmented-content="2">
+                            {% for iKey, aTemplate in variables.oPublicIncomeTemplates %}
+                                <div class="radio">
+                                    <input id="name{{ iKey }}1" type="radio" class="js--template-name" name="sCode" data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
+                                    <label for="name{{ iKey }}1">
+                                        <div class="template-sprite template-sprite-circle template-sprite-{{ aTemplate.code }}"></div>
+                                        <span>{{ ('app.label.log.code.' ~ aTemplate.code)|trans }}</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </li>
+                </ul>
+                <ul class="ios-list">
+                    <li class="ios-text-input">
+                        <input id="log-description" required="required" type="text" name="sDescription">
+                        <span>{% trans %}app.label.description{% endtrans %}</span>
+                    </li>
+                    <li class="ios-text-input ios-text-input-brand">
+                        <input id="log-sum" type="text" required="required" name="sSum">
+                        <span>{% trans %}app.label.sum{% endtrans %}{% trans %}app.currency{% endtrans %}</span>
+                    </li>
+                    <li class="ios-text-input">
+                        <input id="log-createstamp" type="text" required="required" name="sCreatestamp" value="{{ variables.sDateTime }}">
+                        <span>{% trans %}app.label.createstamp{% endtrans %}</span>
+                    </li>
+                </ul>
+            </div>
+        </form>
+        <script>postLog.init()</script>
+    </div>
+{% endmacro new %}
+
+
+{% macro newfix(variables) %}
+    <div id="ajax-header">
+        {% trans %}app.label.newFixLog{% endtrans %}
+    </div>
+    <div id="ajax-content">
+        <form class="js--post-form" action="./savefix" method="post">
+            <input type="hidden" id="saveNew" name="saveNew" value="1">
+            <input type="hidden" id="logImage" name="sCode">
+            <input class="js--log-segmented-control" id="type-01" data-segmented-control="1" value="-1" type="radio" checked name="iType">
+            <input class="js--log-segmented-control" id="type-02" data-segmented-control="2" value="-2" type="radio" name="iType">
+            <div class="ios-segmented-controls">
+                <label for="type-01">{% trans %}app.button.fixexpend{% endtrans %}</label>
+                <label for="type-02">{% trans %}app.button.fixincome{% endtrans %}</label>
+            </div>
+            <div class="_scroll" data-segmented-parent>
+                <ul class="ios-list">
+                    <li class="ios-padding ios-padding-bottom">
+                        <div class="horizontal-radio _scroll-full" data-segmented-content="1">
+                            {% for iKey, aTemplate in variables.oPublicExpendTemplates %}
+                                <div class="radio">
+                                    <input id="name{{ iKey }}0" type="radio" class="js--template-name" name="sCode" data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
+                                    <label for="name{{ iKey }}0">
+                                        <div class="template-sprite template-sprite-circle template-sprite-{{ aTemplate.code }}"></div>
+                                        <span>{{ ('app.label.log.code.' ~ aTemplate.code)|trans }}</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="horizontal-radio _scroll-full" data-segmented-content="2">
+                            {% for iKey, aTemplate in variables.oPublicIncomeTemplates %}
+                                <div class="radio">
+                                    <input id="name{{ iKey }}1" type="radio" class="js--template-name" name="sCode" data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
+                                    <label for="name{{ iKey }}1">
+                                        <div class="template-sprite template-sprite-circle template-sprite-{{ aTemplate.code }}"></div>
+                                        <span>{{ ('app.label.log.code.' ~ aTemplate.code)|trans }}</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </li>
+                </ul>
+                <ul class="ios-list">
+                    <li class="ios-text-input">
+                        <input id="log-description" required="required" type="text" name="sDescription">
+                        <span>{% trans %}app.label.description{% endtrans %}</span>
+                    </li>
+                    <li class="ios-text-input ios-text-input-brand">
+                        <input id="log-sum" type="text" required="required" name="sSum">
+                        <span>{% trans %}app.label.sum{% endtrans %}{% trans %}app.currency{% endtrans %}</span>
+                    </li>
+                </ul>
+                <h4>{% trans %}app.label.existingFixLogs{% endtrans %} ({% trans %}app.button.income{% endtrans %} / {% trans %}app.button.expend{% endtrans %})</h4>
+                <ul class="ios-list horizontal-radio">
+                    {% for iKey, aTemplate in variables.oUserFixIncomeTemplates %}
+                        <li class="radio">
+                            <div class="template-sprite template-sprite-circle template-sprite-{{ aTemplate.code }}"></div>
+                            <span>{{ ('app.label.log.code.' ~ aTemplate.code)|trans }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <ul class="ios-list horizontal-radio">
+                    {% for iKey, aTemplate in variables.oUserFixExpendTemplates %}
+                        <li class="radio">
+                            <div class="template-sprite template-sprite-circle template-sprite-{{ aTemplate.code }}"></div>
+                            <span>{{ ('app.label.log.code.' ~ aTemplate.code)|trans }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </form>
+        <script>postLog.init()</script>
+    </div>
+{% endmacro newfix %}
+
+
+{% macro modal(variables) %}
+    <div class="modal">
+        <div class="ios-header ios-header-brand">
+            <button class="ion-btn js-close-ajaxmodal pull-left">
+                <i class="ion-ios-arrow-back"></i>
+            </button>
+            <div id="modal-header" class="ios-header-name"></div>
+            <button class="ion-btn pull-right js--submit-modal-form" style="display: none;">
+                <span class="ion-text">{% trans %}app.button.save{% endtrans %}</span>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="loading"><i></i><span>{% trans %}app.label.loading{% endtrans %}</span></div>
+        </div>
+    </div>
+{% endmacro modal %}

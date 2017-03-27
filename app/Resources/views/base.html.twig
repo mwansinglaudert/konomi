@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <meta name="apple-mobile-web-app-title" content="konomi">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta content="black-translucent" id="status_bar" name="apple-mobile-web-app-status-bar-style" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        {% block stylesheets %}{% endblock %}
+        {% block javascriptstop %}{% endblock %}
+    </head>
+    <body class="{{ sCookieWebApp }}">
+        {% block body %}{% endblock %}
+
+        <div class="js-scrolltop"></div>
+        {% block javascriptsbottom %}{% endblock %}
+    </body>
+</html>

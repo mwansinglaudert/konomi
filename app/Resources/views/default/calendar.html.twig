@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% import "macros.html.twig" as macros %}
+{% block title %}Overview{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="dist/assets/css/style.css">
+    <link rel="apple-touch-icon" href="dist/assets/img/konomi-icon-192.png"/>
+{% endblock %}
+
+
+{% block javascriptstop %}
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+        setCookie('ko_cookie_saved-webapp',window.navigator.standalone ? '_standalone':'',30);
+    </script>
+{% endblock %}
+
+
+{% block body %}
+    <div class="body">
+        {{ macros.calendar(_context) }}
+        {{ macros.modal(_context) }}
+    </div>
+{% endblock %}
+
+
+{% block javascriptsbottom %}
+    <script src="dist/assets/js/libs.js"></script>
+    <script src="dist/assets/js/scripts.js"></script>
+{% endblock %}
