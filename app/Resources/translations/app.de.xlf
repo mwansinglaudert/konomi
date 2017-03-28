@@ -160,6 +160,10 @@
                 <source>app.label.log.code.rental</source>
                 <target>Miete</target>
             </trans-unit>
+            <trans-unit id="app.label.log.code.additionalcosts">
+                <source>app.label.log.code.additionalcosts</source>
+                <target>Nebenkosten</target>
+            </trans-unit>
             <trans-unit id="app.label.log.code.buildingsavings">
                 <source>app.label.log.code.buildingsavings</source>
                 <target>Bausparen</target>
@@ -208,7 +212,7 @@
                 <source>app.label.log.code.car</source>
                 <target>Auto</target>
             </trans-unit>
-            <trans-unit id="app.label.log.code.amfuelazon">
+            <trans-unit id="app.label.log.code.fuel">
                 <source>app.label.log.code.fuel</source>
                 <target>Tanken</target>
             </trans-unit>
