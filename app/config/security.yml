@@ -32,6 +32,12 @@ security:
             logout:
                 path: /logout
                 target: /
+            remember_me:
+                secret:   '%secret%'
+                secure:   false # Send cookie via HTTPS
+                lifetime: 2592000 # 1 month in seconds
+                path:     /
+                always_remember_me: true
             # activate different ways to authenticate
 
             # http_basic: ~
@@ -45,6 +51,7 @@ security:
         - { path: ^/password, roles: ROLE_ADMIN }
         - { path: ^/start, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/calendar, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/statistic, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/edit, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/save, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/new, roles: [ROLE_ADMIN, ROLE_USER] }
