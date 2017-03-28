@@ -319,7 +319,7 @@ class DefaultController extends Controller {
         foreach ( $oFixTemplates as $oFixTemplate ) {
 
             // Check if current expend template exists for current user and month
-            $oFixExpendLog = $oManager->getRepository('AppBundle:Log')->findByUserTypeNameAndDate( $sFromDateStamp, $sToDateStamp, $oFixTemplate->getCode(), $iType, $oUser );
+            $oFixExpendLog = $oManager->getRepository('AppBundle:Log')->findByUserTypeCodeDescriptionAndDate( $oUser, $iType, $oFixTemplate->getCode(), $oFixTemplate->getDescription(), $sFromDateStamp, $sToDateStamp );
 
             // Create current fix expend template as fix log for current month
             if ( empty($oFixExpendLog) ) {

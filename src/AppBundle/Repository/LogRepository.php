@@ -100,14 +100,15 @@ class LogRepository extends EntityRepository {
     /**
      * Returns all log entries of the given user and in the given date time
      *
+     * @param object $oUser
+     * @param integer $iType
+     * @param string $sCode
+     * @param string $sDescription
      * @param string $sFromDateStamp
      * @param string $sToDateStamp
-     * @param string $sCode
-     * @param integer $iType
-     * @param object $oUser
      * @return array
      */
-    public function findByUserTypeNameAndDate($sFromDateStamp, $sToDateStamp, $sCode, $iType, $oUser ) {
+    public function findByUserTypeCodeDescriptionAndDate( $oUser, $iType, $sCode, $sDescription, $sFromDateStamp, $sToDateStamp ) {
 
         // Build query and return result
         $oQuery = $this
@@ -115,12 +116,14 @@ class LogRepository extends EntityRepository {
             ->where( 'e.createstamp >= :fromDate' )
             ->andWhere( 'e.createstamp <= :toDate' )
             ->andWhere( 'e.code = :code' )
+            ->andWhere( 'e.description = :description' )
             ->andWhere( 'e.type = :type' )
             ->andWhere( 'e.user = :user' )
             ->andWhere( 'e.deleted = 0' )
             ->setParameter( 'fromDate', $sFromDateStamp )
             ->setParameter( 'toDate', $sToDateStamp )
             ->setParameter( 'code', $sCode )
+            ->setParameter( 'description', $sDescription )
             ->setParameter( 'type', $iType )
             ->setParameter( 'user', $oUser->getUsername() )
             ->orderBy( 'e.timestamp', 'DESC' )
