@@ -98,7 +98,7 @@
             </trans-unit>
             <trans-unit id="app.label.statistic.average_fuel">
                 <source>app.label.statistic.average_fuel</source>
-                <target>&#216; Tankekosten:</target>
+                <target>&#216; Tankkosten:</target>
             </trans-unit>
 
             <trans-unit id="app.label.month.01">
