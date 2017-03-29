@@ -14,11 +14,13 @@ class LogRepository extends EntityRepository {
     /**
      * Returns all log entries
      *
+     * @param string $sSortBy
+     * @param string $sSortOrder
      * @return array
      */
-    public function findAll() {
+    public function findAll( $sSortBy='createstamp', $sSortOrder='DESC' ) {
 
-        return $this->findBy(array(), array('timestamp' => 'DESC'));
+        return $this->findBy( array(), array($sSortBy => $sSortOrder) );
     }
 
 
@@ -26,9 +28,11 @@ class LogRepository extends EntityRepository {
      * Returns all log entries of the given user
      *
      * @param object $oUser
+     * @param string $sSortBy
+     * @param string $sSortOrder
      * @return array
      */
-    public function findAllByUser($oUser ) {
+    public function findAllByUser( $oUser, $sSortBy='createstamp', $sSortOrder='DESC' ) {
 
         // Build query and return result
         $oQuery = $this
@@ -36,7 +40,7 @@ class LogRepository extends EntityRepository {
             ->andWhere( 'e.user = :user' )
             ->andWhere( 'e.deleted = 0' )
             ->setParameter( 'user', $oUser->getUsername() )
-            ->orderBy( 'e.createstamp', 'DESC' )
+            ->orderBy( 'e.'.$sSortBy, $sSortOrder )
             ->getQuery();
         return $oQuery->getResult();
     }
@@ -50,7 +54,7 @@ class LogRepository extends EntityRepository {
      * @param object $oUser
      * @return array
      */
-    public function findByUserAndDate($sFromDateStamp, $sToDateStamp, $oUser ) {
+    public function findByUserAndDate( $sFromDateStamp, $sToDateStamp, $oUser ) {
 
         // Build query and return result
         $oQuery = $this
@@ -63,6 +67,7 @@ class LogRepository extends EntityRepository {
             ->setParameter( 'toDate', $sToDateStamp )
             ->setParameter( 'user', $oUser->getUsername() )
             ->orderBy( 'e.timestamp', 'DESC' )
+            ->addOrderBy( 'e.id', 'DESC' )
             ->getQuery();
         return $oQuery->getResult();
     }

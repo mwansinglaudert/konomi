@@ -12,6 +12,8 @@
                 {#<input type="hidden" name="_target_path" value="/overview" />#}
                 <input class="input-user" type="text" id="user" name="_username" placeholder="{% trans %}app.label.username{% endtrans %}" value="{{ variables.last_username }}">
                 <input class="input-password" type="password" id="pass" name="_password" placeholder="{% trans %}app.label.password{% endtrans %}" value="">
+                {#<input type="checkbox" id="remember_me" name="_remember_me" checked />#}
+                {#<label for="remember_me">Keep me logged in</label>#}
                 <button type="submit">{% trans %}app.button.login{% endtrans %}</button>
             </form>
         </div>
@@ -24,6 +26,9 @@
         <div class="ios-header ios-header-brand">
             <a href="./logout" class="ion-btn pull-left js--ajax" title="Logout '{{ variables.app.user.username }}'">
                 <i class="ion ion-ios-person"></i>
+            </a>
+            <a href="./statistic" class="ion-btn pull-left js-open-ajaxmodal" title="{% trans %}app.label.statistic{% endtrans %}">
+                <i class="ion ion-pie-graph"></i>
             </a>
             <div class="ios-header-name">{% trans %}app.title{% endtrans %}</div>
             <a class="ion-btn pull-right js-open-ajaxmodal" href="./newfix" title="{% trans %}app.label.newFixLog{% endtrans %}">
@@ -100,6 +105,135 @@
 {% endmacro calendar %}
 
 
+{% macro statistic(variables) %}
+    <div id="ajax-header">
+        {% trans %}app.label.statistic{% endtrans %}
+    </div>
+    <div id="ajax-content">
+        {% for iYear, aMonths in variables.aStatistics %}
+            <h2>
+                {{ iYear }}<br>
+            </h2>
+            <p class="average">
+                <strong>{% trans %}app.label.statistic.average_total{% endtrans %}</strong> {{ aMonths.info.average_total|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %} |
+                <strong>{% trans %}app.label.statistic.average_total_without_fix{% endtrans %}</strong> {{ aMonths.info.average_total_without_fix|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %}<br>
+                <strong>{% trans %}app.label.statistic.average_fix{% endtrans %}</strong> {{ aMonths.info.average_fix|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %} |
+                <strong>{% trans %}app.label.statistic.average_normal{% endtrans %}</strong> {{ aMonths.info.average_normal|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %} |
+                <strong>{% trans %}app.label.statistic.average_fuel{% endtrans %}</strong> {{ aMonths.info.average_fuel|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %}
+            </p>
+            <div id="chart{{ iYear }}" style="height:400px;">
+                <svg></svg>
+            </div>
+
+            <script type="text/javascript">
+                var charData{{ iYear }} = [
+                    {
+                        "key": "{% trans %}app.label.statistic.fix{% endtrans %}",
+                        "nonStackable": false,
+                        "values": [
+                            {% for iMonth, aMonth in aMonths %}
+                                {% for sKey, iSum in aMonth %}
+                                    {% if sKey == 'fix' %}
+                                        {
+                                            "x": {{ iMonth }},
+                                            "y": {{ iSum }},
+                                            "series": 0,
+                                            "key": "fix"
+                                        },
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        ]
+                    },
+                    {
+                        "key": "{% trans %}app.label.statistic.normal{% endtrans %}",
+                        "nonStackable": false,
+                        "values": [
+                            {% for iMonth, aMonth in aMonths %}
+                                {% for sKey, iSum in aMonth %}
+                                    {% if sKey == 'normal' %}
+                                        {
+                                            "x": {{ iMonth }},
+                                            "y": {{ iSum }},
+                                            "series": 0,
+                                            "key": "normal"
+                                        },
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        ]
+                    },
+                    {
+                        "key": "{% trans %}app.label.statistic.fuel{% endtrans %}",
+                        "nonStackable": false,
+                        "values": [
+                            {% for iMonth, aMonth in aMonths %}
+                                {% for sKey, iSum in aMonth %}
+                                    {% if sKey == 'fuel' %}
+                                        {
+                                            "x": {{ iMonth }},
+                                            "y": {{ iSum }},
+                                            "series": 0,
+                                            "key": "fuel"
+                                        },
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        ],
+                    }
+                ];
+                nv.addGraph({
+                    generate: function() {
+                        var width = nv.utils.windowSize().width,
+                            height = '400';
+
+                        var chart = nv.models.multiBarChart()
+                            .width(width)
+                            .height(height)
+                            .stacked(true)
+                            .showXAxis(true)
+                            .showYAxis(true)
+    //                        .xDomain(['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']);
+                        ;
+
+                        chart.dispatch.on('renderEnd', function(){
+                            console.log('Render Complete');
+                        });
+
+    //                    chart.barColor(["#FF0000","#00FF00","#0000FF"]);
+
+                        var svg = d3.select('#chart{{ iYear }} svg').datum(charData{{ iYear }});
+                        console.log('calling chart');
+                        svg.transition().duration(0).call(chart);
+
+                        nv.utils.windowResize(function () {
+                            chart.update();
+    //                        drawLimit(chart, svg, limits);
+                        });
+
+                        return chart;
+                    },
+                    callback: function(graph) {
+                        nv.utils.windowResize(function() {
+                            var width = nv.utils.windowSize().width;
+                            var height = nv.utils.windowSize().height;
+                            graph.width(width).height(height);
+
+                            d3.select('#chart{{ iYear }} svg')
+                                .attr('width', width)
+                                .attr('height', height)
+                                .transition().duration(0)
+                                .call(graph);
+
+                        });
+                    }
+                });
+            </script>
+        {% endfor %}
+    </div>
+{% endmacro statistic %}
+
+
 {% macro edit(variables) %}
     <div id="ajax-header">
         {% trans %}app.label.edit{% endtrans %}
@@ -116,7 +250,7 @@
                                 <input id="edit{{ sParam }}" name="{{ sParam }}" type="hidden" value="{{ sValue }}">
                             {% else %}
                                 <li class="ios-text-input {% if sParam == 'sSum' %}ios-text-input-brand{% endif %}">
-                                    <input required="required" id="edit{{ sParam }}" name="{{ sParam }}" type="text" value="{{ sValue }}">
+                                    <input required="required" id="edit{{ sParam }}" name="{{ sParam }}" type="{% if sParam == 'sCreatestamp' %}datetime-local{% else %}text{% endif %}" value="{{ sValue }}">
                                     <span for="edit{{ sParam }}">
                                         {% if sParam == 'sSum' %}
                                             {% trans %}app.label.sum{% endtrans %}{% trans %}app.currency{% endtrans %}

@@ -119,8 +119,10 @@ class DefaultController extends Controller {
             $sFromDateStamp = $oDateTime->format( "Y-m" ) . '-01 00:00:00';
             $sToDateStamp   = $oDateTime->format( "Y-m-t" ) . ' 23:59:59';
 
-            // Check fix expends
-            $this->_checkFixExpends( $oManager, $oUser, $sFromDateStamp, $sToDateStamp );
+            // Check fix expends, but only if we don't show data of the past
+            if ( empty($sYearMonth) ) {
+                $this->_checkFixExpends( $oManager, $oUser, $sFromDateStamp, $sToDateStamp );
+            }
 
             // Get all logs
             $oLogs = $oManager->getRepository('AppBundle:Log')->findByUserAndDate( $sFromDateStamp, $sToDateStamp, $oUser );
@@ -210,7 +212,7 @@ class DefaultController extends Controller {
 
         // Get all logs
         $oManager = $this->getDoctrine()->getManager();
-        $oLogs = $oManager->getRepository('AppBundle:Log')->findAllByUser( $oUser );
+        $oLogs = $oManager->getRepository('AppBundle:Log')->findAllByUser( $oUser, 'createstamp', 'DESC' );
 
         // Create years array
         $aYears = array();
@@ -249,6 +251,151 @@ class DefaultController extends Controller {
                 'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
                 'sCookieWebApp' => $sCookieWebApp,
                 'aYears' => $aYears,
+            )
+        );
+
+        // Return response
+        return $oResponse;
+    }
+
+
+    /**
+     * Statistic Action
+     *
+     * @Route("/statistic")
+     * @param Request $oRequest
+     * @return object
+     */
+    public function statisticAction( Request $oRequest ) {
+
+        // Get AJAX status
+        $bAjax = $this->_isAJAX();
+
+        // Get number formatting
+        $aNumberFormat = $this->getParameter("number_format");
+
+        // Initialize cookie utility and get cookie webapp value
+        $oCookieUtility = new CookieUtility();
+        $sCookieWebApp = $oCookieUtility->get( 'webapp' );
+
+        // Get current user
+        $oUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        // Get all logs
+        $oManager = $this->getDoctrine()->getManager();
+        $oLogs = $oManager->getRepository('AppBundle:Log')->findAllByUser( $oUser, 'createstamp', 'ASC' );
+
+        // Create statistics array
+        $aStatistics = array();
+
+        // Iterate over each log and get balance
+        /** @var Log $oLog */
+        foreach ( $oLogs as $oLog ) {
+
+            // Get creation time of current log and set year and month
+            $oCreationDate = $oLog->getCreatestamp();
+            $aDateTime = explode("-", $oCreationDate->format("Y-m-d"));
+            $iYear = $aDateTime[0];
+            $iMonth = $aDateTime[1];
+
+            // Build year array
+            if ( !array_key_exists($iYear, $aStatistics) ) {
+                $aStatistics[$iYear] = array();
+            }
+
+            // Build month array
+            if ( !array_key_exists($iMonth, $aStatistics[$iYear]) ) {
+                $aStatistics[$iYear][$iMonth] = array();
+            }
+
+            // Get current log code
+            $sCode = $oLog->getCode();
+
+            // Get fix expends or dynamic expends and set correct category
+            if ( $oLog->getType() === -1 ) {
+
+                $sCategory = 'fix';
+            }
+            elseif ( $oLog->getType() === 0 ) {
+
+                if ( $sCode === "fuel" ) {
+                    $sCategory = $sCode;
+                }
+                elseif ( $sCode === "foo" ) {
+                    $sCategory = $sCode;
+                }
+                else {
+                    $sCategory = 'normal';
+                }
+            }
+            else {
+                $sCategory = NULL;
+            }
+
+            // Add sums to categories
+            if ( !empty($sCategory) ) {
+
+                // Check if current category already exists
+                if ( isset($aStatistics[$iYear][$iMonth][$sCategory]) || !empty($aStatistics[$iYear][$iMonth][$sCategory]) ) {
+                    $iSum = floatval( $aStatistics[$iYear][$iMonth][$sCategory] );
+                }
+                else {
+                    $iSum = 0;
+                }
+
+                // Add sum of current log / category
+                $aStatistics[$iYear][$iMonth][$sCategory] = $iSum + floatval( $oLog->getSum() );
+            }
+        }
+
+        // Get average month expend of each year
+        foreach ( $aStatistics as $iYear => $aYear ) {
+
+            $iCount                     = 0;
+            $iAverageTotal              = 0;
+            $iAverageTotalWithoutFix    = 0;
+            $iAverageFix                = 0;
+            $iAverageNormal             = 0;
+            $iAverageFuel               = 0;
+            foreach ( $aYear as $aMonth ) {
+                $iCount++;
+                $iAverageTotal              += floatval($aMonth['fix']) + floatval($aMonth['normal']) + floatval($aMonth['fuel']);
+                $iAverageTotalWithoutFix    += floatval($aMonth['normal']) + floatval($aMonth['fuel']);
+                $iAverageFix                += floatval($aMonth['fix']);
+                $iAverageNormal             += floatval($aMonth['normal']);
+                $iAverageFuel               += floatval($aMonth['fuel']);
+            }
+            $iAverageTotal              = $iAverageTotal / $iCount;
+            $iAverageTotalWithoutFix    = $iAverageTotalWithoutFix / $iCount;
+            $iAverageFix                = $iAverageFix / $iCount;
+            $iAverageNormal             = $iAverageNormal / $iCount;
+            $iAverageFuel               = $iAverageFuel / $iCount;
+            $aStatistics[$iYear]['info']['average_total']               = number_format( round($iAverageTotal, 2), 2, ".", "");
+            $aStatistics[$iYear]['info']['average_total_without_fix']   = number_format( round($iAverageTotalWithoutFix, 2), 2, ".", "");
+            $aStatistics[$iYear]['info']['average_fix']                 = number_format( round($iAverageFix, 2), 2, ".", "");
+            $aStatistics[$iYear]['info']['average_normal']              = number_format( round($iAverageNormal, 2), 2, ".", "");
+            $aStatistics[$iYear]['info']['average_fuel']                = number_format( round($iAverageFuel, 2), 2, ".", "");
+        }
+        unset( $aYear, $aMonth, $iYear, $iMonth, $iSum, $iCount, $iAverageTotal, $iAverageFix, $iAverageNormal, $iAverageFuel );
+
+        // Rebuild array (DESC)
+        krsort( $aStatistics );
+
+        // Set template
+        if ( $bAjax ) {
+            $sTemplate = "ajax/statistic.html.twig";
+        }
+        else {
+            $sTemplate = "default/statistic.html.twig";
+        }
+
+        // Render template with variables
+        $oResponse = $this->render( $sTemplate,
+            array(
+                'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+                'sCookieWebApp' => $sCookieWebApp,
+                'aNumberFormat' => $aNumberFormat,
+                'aStatistics' => $aStatistics,
             )
         );
 
@@ -342,5 +489,55 @@ class DefaultController extends Controller {
 
         // Save new objects
         $oManager->flush();
+    }
+
+
+    /**
+     * PRIVATE function that generates a JSon string
+     *
+     * @param array $data
+     * @param array $excluded
+     * @return string
+     */
+    private function _generateJSonData( $data, $excluded=array() ) {
+
+        // JSon string start
+        $sJSon = "[\n";
+
+        // JSon array
+        $aJSon = array();
+
+        // Iterate over given associative data array
+        foreach ( $data as $d ) {
+
+            // Start
+            $sJSon .= "{ ";
+
+            // Reset JSon array
+            $aJSonValue = array();
+
+            // Iterate over each value of current array
+            foreach ( $d as $key => $value ) {
+
+                // Continue if current key is not in the excluded array
+                if (! in_array($key, $excluded) ) {
+
+                    // If value is an integer, don't put it in quotes
+                    if ( is_int($value) ) {
+                        $aJSonValue[] = '"'.$key.'": '.$value."";
+                    } else {
+                        $aJSonValue[] = '"'.$key.'": "'.$value.'"';
+                    }
+                }
+            }
+
+            // End
+            $aJSon[] = "{ ". implode(", ", $aJSonValue) ." }";
+        }
+
+        // JSon end
+        $sJSon = "[\n". implode(",\n", $aJSon) ."\n]";
+
+        return $sJSon;
     }
 }

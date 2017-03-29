@@ -22,10 +22,6 @@
                 <target>Passwort</target>
             </trans-unit>
 
-            <trans-unit id="app.label.calendar">
-                <source>app.label.calendar</source>
-                <target>Kalender</target>
-            </trans-unit>
             <trans-unit id="app.label.edit">
                 <source>app.label.edit</source>
                 <target>Bearbeiten</target>
@@ -61,6 +57,48 @@
             <trans-unit id="app.label.loading">
                 <source>app.label.loading</source>
                 <target>laden</target>
+            </trans-unit>
+
+            <trans-unit id="app.label.calendar">
+                <source>app.label.calendar</source>
+                <target>Kalender</target>
+            </trans-unit>
+
+            <trans-unit id="app.label.statistic">
+                <source>app.label.statistic</source>
+                <target>Statistik</target>
+            </trans-unit>
+            <trans-unit id="app.label.statistic.fix">
+                <source>app.label.statistic.fix</source>
+                <target>Fixkosten</target>
+            </trans-unit>
+            <trans-unit id="app.label.statistic.normal">
+                <source>app.label.statistic.normal</source>
+                <target>Normale Kosten</target>
+            </trans-unit>
+            <trans-unit id="app.label.statistic.fuel">
+                <source>app.label.statistic.fuel</source>
+                <target>Tanken</target>
+            </trans-unit>
+            <trans-unit id="app.label.statistic.average_total">
+                <source>app.label.statistic.average_total</source>
+                <target>&#216; Total:</target>
+            </trans-unit>
+            <trans-unit id="app.label.statistic.average_total_without_fix">
+                <source>app.label.statistic.average_total_without_fix</source>
+                <target>&#216; Total ohne Fixkosten:</target>
+            </trans-unit>
+            <trans-unit id="app.label.statistic.average_fix">
+                <source>app.label.statistic.average_fix</source>
+                <target>&#216; Fixkosten:</target>
+            </trans-unit>
+            <trans-unit id="app.label.statistic.average_normal">
+                <source>app.label.statistic.average_normal</source>
+                <target>&#216; normale Kosten:</target>
+            </trans-unit>
+            <trans-unit id="app.label.statistic.average_fuel">
+                <source>app.label.statistic.average_fuel</source>
+                <target>&#216; Tankekosten:</target>
             </trans-unit>
 
             <trans-unit id="app.label.month.01">
@@ -136,13 +174,13 @@
                 <source>app.label.log.code.kk</source>
                 <target>K+K</target>
             </trans-unit>
-            <trans-unit id="app.label.log.code.lidl">
-                <source>app.label.log.code.lidl</source>
-                <target>Lidl</target>
-            </trans-unit>
             <trans-unit id="app.label.log.code.aldi">
                 <source>app.label.log.code.aldi</source>
                 <target>Aldi</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.lidl">
+                <source>app.label.log.code.lidl</source>
+                <target>Lidl</target>
             </trans-unit>
             <trans-unit id="app.label.log.code.drugs">
                 <source>app.label.log.code.drugs</source>
@@ -159,6 +197,10 @@
             <trans-unit id="app.label.log.code.rental">
                 <source>app.label.log.code.rental</source>
                 <target>Miete</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.home">
+                <source>app.label.log.code.home</source>
+                <target>Wohnung</target>
             </trans-unit>
             <trans-unit id="app.label.log.code.additionalcosts">
                 <source>app.label.log.code.additionalcosts</source>
@@ -183,6 +225,10 @@
             <trans-unit id="app.label.log.code.mobile">
                 <source>app.label.log.code.mobile</source>
                 <target>Handy</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.media">
+                <source>app.label.log.code.media</source>
+                <target>Medien</target>
             </trans-unit>
             <trans-unit id="app.label.log.code.amazon">
                 <source>app.label.log.code.amazon</source>
