@@ -15,9 +15,9 @@ node_modules
 /vendor
 
 # Database
-/db/*
-!/db/konomi.sql
-!/db/konomi_templates.csv
+/_db/*
+!/_db/konomi.sql
+!/_db/konomi_templates.csv
 
 # Caching
 /var/cache/*
