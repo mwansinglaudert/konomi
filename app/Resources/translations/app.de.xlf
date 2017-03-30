@@ -74,7 +74,7 @@
             </trans-unit>
             <trans-unit id="app.label.statistic.normal">
                 <source>app.label.statistic.normal</source>
-                <target>Normale Kosten</target>
+                <target>Normal</target>
             </trans-unit>
             <trans-unit id="app.label.statistic.fuel">
                 <source>app.label.statistic.fuel</source>
