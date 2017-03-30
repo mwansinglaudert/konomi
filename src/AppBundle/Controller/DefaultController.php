@@ -329,30 +329,48 @@ class DefaultController extends Controller {
         // Get average month expend of each year
         foreach ( $aStatistics as $iYear => $aYear ) {
 
+            // Set first values
             $iCount                     = 0;
             $iAverageTotal              = 0;
             $iAverageTotalWithoutFix    = 0;
             $iAverageFix                = 0;
             $iAverageNormal             = 0;
             $iAverageFuel               = 0;
-            foreach ( $aYear as $aMonth ) {
+
+            // Iterate over each month of the current year
+            foreach ( $aYear as $iMonth => $aMonth ) {
+
+                // Increase counter
                 $iCount++;
-                $iAverageTotal              += floatval($aMonth['fix']) + floatval($aMonth['normal']) + floatval($aMonth['fuel']);
-                $iAverageTotalWithoutFix    += floatval($aMonth['normal']) + floatval($aMonth['fuel']);
-                $iAverageFix                += floatval($aMonth['fix']);
-                $iAverageNormal             += floatval($aMonth['normal']);
-                $iAverageFuel               += floatval($aMonth['fuel']);
+
+                // Check if categories 'fix', 'normal' and 'fuel' of the current month exist
+                if ( !isset($aMonth['fix']) ) { $aStatistics[$iYear][$iMonth]['fix'] = 0; }
+                if ( !isset($aMonth['fuel']) ) { $aStatistics[$iYear][$iMonth]['fuel'] = 0; }
+                if ( !isset($aMonth['normal']) ) { $aStatistics[$iYear][$iMonth]['normal'] = 0; }
+
+                // Calculate average
+                $iAverageTotal              += floatval($aStatistics[$iYear][$iMonth]['fix']) + floatval($aStatistics[$iYear][$iMonth]['normal']) + floatval($aStatistics[$iYear][$iMonth]['fuel']);
+                $iAverageTotalWithoutFix    += floatval($aStatistics[$iYear][$iMonth]['normal']) + floatval($aStatistics[$iYear][$iMonth]['fuel']);
+                $iAverageFix                += floatval($aStatistics[$iYear][$iMonth]['fix']);
+                $iAverageNormal             += floatval($aStatistics[$iYear][$iMonth]['normal']);
+                $iAverageFuel               += floatval($aStatistics[$iYear][$iMonth]['fuel']);
             }
+
+            // Calculate average sums
             $iAverageTotal              = $iAverageTotal / $iCount;
             $iAverageTotalWithoutFix    = $iAverageTotalWithoutFix / $iCount;
             $iAverageFix                = $iAverageFix / $iCount;
             $iAverageNormal             = $iAverageNormal / $iCount;
             $iAverageFuel               = $iAverageFuel / $iCount;
+
+            // Set sums
             $aStatistics[$iYear]['info']['average_total']               = number_format( round($iAverageTotal, 2), 2, ".", "");
             $aStatistics[$iYear]['info']['average_total_without_fix']   = number_format( round($iAverageTotalWithoutFix, 2), 2, ".", "");
             $aStatistics[$iYear]['info']['average_fix']                 = number_format( round($iAverageFix, 2), 2, ".", "");
             $aStatistics[$iYear]['info']['average_normal']              = number_format( round($iAverageNormal, 2), 2, ".", "");
             $aStatistics[$iYear]['info']['average_fuel']                = number_format( round($iAverageFuel, 2), 2, ".", "");
+
+
         }
         unset( $aYear, $aMonth, $iYear, $iMonth, $iSum, $iCount, $iAverageTotal, $iAverageFix, $iAverageNormal, $iAverageFuel );
 
