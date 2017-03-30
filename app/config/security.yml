@@ -29,9 +29,11 @@ security:
             form_login:
                 login_path: /login
                 check_path: /login
+                success_handler: authentication_handler
             logout:
                 path: /logout
                 target: /
+                success_handler: logout_handler
             remember_me:
                 secret:   '%secret%'
                 secure:   false # Send cookie via HTTPS

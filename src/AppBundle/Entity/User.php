@@ -39,8 +39,15 @@ class User implements AdvancedUserInterface, \Serializable {
 
     /**
      * @ORM\Column(type="boolean", length=4, name="is_active")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $isActive;
+
+    /**
+     * @ORM\Column(type="boolean", length=4)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $login;
 
     /**
      * @ORM\Column(type="datetime")
@@ -131,6 +138,38 @@ class User implements AdvancedUserInterface, \Serializable {
     public function setRole($role)
     {
         $this->role = $role;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param mixed $isActive
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * @param mixed $login
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
     }
 
     /**
