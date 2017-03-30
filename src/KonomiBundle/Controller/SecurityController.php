@@ -1,12 +1,12 @@
 <?php
-namespace AppBundle\Controller;
+namespace KonomiBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Utility\CookieUtility;
+use KonomiBundle\Utility\CookieUtility;
 
 /**
  * konomi security controller class
@@ -39,7 +39,7 @@ class SecurityController extends Controller {
         if ( empty($sPlainPass) ) { $sPlainPass = 'password'; }
 
         // Encode password
-        $oUser = new \AppBundle\Entity\User();
+        $oUser = new \KonomiBundle\Entity\User();
         $oEncoder = $this->container->get('security.password_encoder');
         $sEncodedPass = $oEncoder->encodePassword($oUser, $sPlainPass);
 

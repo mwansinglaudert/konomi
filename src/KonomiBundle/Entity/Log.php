@@ -1,17 +1,17 @@
 <?php
-namespace AppBundle\Entity;
+namespace KonomiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Template entity class
+ * Log entity class
  *
  * @package konomi
  * @license <property of MWa/MiS>
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TemplateRepository")
+ * @ORM\Entity(repositoryClass="KonomiBundle\Repository\LogRepository")
  */
-class Template {
+class Log {
 
     /**
      * @ORM\Column(type="integer")
@@ -22,6 +22,7 @@ class Template {
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @ORM\JoinColumn(nullable=false)
      */
     public $code;
 
@@ -64,7 +65,7 @@ class Template {
     public $link;
 
     /**
-     * @ORM\Column(type="boolean", length=1)
+     * @ORM\Column(type="boolean", length=4)
      * @ORM\JoinColumn(nullable=false)
      */
     public $deleted;

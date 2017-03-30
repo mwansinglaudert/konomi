@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Handler;
+namespace KonomiBundle\Handler;
 
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\HttpUtils;
-use AppBundle\Entity\User;
+use KonomiBundle\Entity\User;
 
 /**
  * konomi authentication handler class

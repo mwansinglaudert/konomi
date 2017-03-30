@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Repository;
+namespace KonomiBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

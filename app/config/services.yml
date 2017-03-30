@@ -5,18 +5,18 @@ parameters:
 
 services:
 #    service_name:
-#        class: AppBundle\Directory\ClassName
+#        class: KonomiBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
     authentication_handler:
-        class: AppBundle\Handler\AuthenticationHandler
+        class: KonomiBundle\Handler\AuthenticationHandler
         arguments: ['@service_container', '@security.token_storage', '@security.http_utils', '/']
     logout_handler:
-        class: AppBundle\Handler\LogoutHandler
+        class: KonomiBundle\Handler\LogoutHandler
         arguments: ['@service_container', '@security.token_storage', '@security.http_utils', '/']
 
 #    account.security_listener:
-#        class: AppBundle\Listener\SecurityListener
+#        class: KonomiBundle\Listener\SecurityListener
 #        arguments: ['@service_container']
 #        tags:
 #            - { name: kernel.event_listener, event: security.authentication.success, method: onSecurityAuthentication }

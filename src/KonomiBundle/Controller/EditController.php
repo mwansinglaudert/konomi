@@ -1,14 +1,14 @@
 <?php
-namespace AppBundle\Controller;
+namespace KonomiBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\Log;
-use AppBundle\Entity\Template;
-use AppBundle\Utility\CookieUtility;
+use KonomiBundle\Entity\Log;
+use KonomiBundle\Entity\Template;
+use KonomiBundle\Utility\CookieUtility;
 
 /**
  * konomi editor controller class
@@ -140,7 +140,7 @@ class EditController extends Controller {
 
             // Get current log
             /** @var Log $oLog */
-            $oLog = $oManager->getRepository('AppBundle:Log')->find( $iID );
+            $oLog = $oManager->getRepository('KonomiBundle:Log')->find( $iID );
 
             // Delete or update log
             if ( $bDelete ) {
@@ -213,8 +213,8 @@ class EditController extends Controller {
 
         // Get public templates
         $oManager = $this->getDoctrine()->getManager();
-        $oPublicIncomeTemplates = $oManager->getRepository('AppBundle:Template')->findByUserAndType( 1, 'public' );
-        $oPublicExpendTemplates = $oManager->getRepository('AppBundle:Template')->findByUserAndType( 0, 'public' );
+        $oPublicIncomeTemplates = $oManager->getRepository('KonomiBundle:Template')->findByUserAndType( 1, 'public' );
+        $oPublicExpendTemplates = $oManager->getRepository('KonomiBundle:Template')->findByUserAndType( 0, 'public' );
 
         // Set template by AJAX status
         if ( $bAjax ) {
@@ -259,10 +259,10 @@ class EditController extends Controller {
 
         // Get user fix templates
         $oManager = $this->getDoctrine()->getManager();
-        $oPublicIncomeTemplates = $oManager->getRepository('AppBundle:Template')->findByUserAndType( 1, 'public' );
-        $oPublicExpendTemplates = $oManager->getRepository('AppBundle:Template')->findByUserAndType( 0, 'public' );
-        $oUserFixExpendTemplates = $oManager->getRepository('AppBundle:Template')->findByUserAndType( -1, $oUser->getUsername() );
-        $oUserFixIncomeTemplates = $oManager->getRepository('AppBundle:Template')->findByUserAndType( -2, $oUser->getUsername() );
+        $oPublicIncomeTemplates = $oManager->getRepository('KonomiBundle:Template')->findByUserAndType( 1, 'public' );
+        $oPublicExpendTemplates = $oManager->getRepository('KonomiBundle:Template')->findByUserAndType( 0, 'public' );
+        $oUserFixExpendTemplates = $oManager->getRepository('KonomiBundle:Template')->findByUserAndType( -1, $oUser->getUsername() );
+        $oUserFixIncomeTemplates = $oManager->getRepository('KonomiBundle:Template')->findByUserAndType( -2, $oUser->getUsername() );
 
         // Update templates
         $oUserFixExpendTemplates = $this->_updateTemplates( $oUserFixExpendTemplates );

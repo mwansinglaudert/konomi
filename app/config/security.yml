@@ -2,7 +2,7 @@
 # http://symfony.com/doc/current/security.html
 security:
     encoders:
-        AppBundle\Entity\User:
+        KonomiBundle\Entity\User:
             algorithm: bcrypt
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
@@ -11,7 +11,7 @@ security:
             memory: ~
         db_provider:
             entity:
-                class: AppBundle:User
+                class: KonomiBundle:User
                 property: user
 
     firewalls:

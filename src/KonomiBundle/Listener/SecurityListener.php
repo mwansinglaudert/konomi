@@ -1,12 +1,12 @@
 <?php
-namespace AppBundle\Listener;
+namespace KonomiBundle\Listener;
 
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use AppBundle\Entity\User;
+use KonomiBundle\Entity\User;
 
 /**
  * konomi security listener class

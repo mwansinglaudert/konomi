@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Utility;
+namespace KonomiBundle\Utility;
 
 class CookieUtility {
 

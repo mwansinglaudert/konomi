@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Controller;
+namespace KonomiBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -7,10 +7,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\User;
-use AppBundle\Entity\Log;
-use AppBundle\Entity\Template;
-use AppBundle\Utility\CookieUtility;
+use KonomiBundle\Entity\User;
+use KonomiBundle\Entity\Log;
+use KonomiBundle\Entity\Template;
+use KonomiBundle\Utility\CookieUtility;
 
 /**
  * konomi default controller class
@@ -125,7 +125,7 @@ class DefaultController extends Controller {
             }
 
             // Get all logs
-            $oLogs = $oManager->getRepository('AppBundle:Log')->findByUserAndDate( $sFromDateStamp, $sToDateStamp, $oUser );
+            $oLogs = $oManager->getRepository('KonomiBundle:Log')->findByUserAndDate( $sFromDateStamp, $sToDateStamp, $oUser );
 
             // Initialize balance
             $iBalance = 0;
@@ -190,7 +190,7 @@ class DefaultController extends Controller {
 
         // Get all logs
         $oManager = $this->getDoctrine()->getManager();
-        $oLogs = $oManager->getRepository('AppBundle:Log')->findAllByUser( $oUser, 'createstamp', 'DESC' );
+        $oLogs = $oManager->getRepository('KonomiBundle:Log')->findAllByUser( $oUser, 'createstamp', 'DESC' );
 
         // Create years array
         $aYears = array();
@@ -261,7 +261,7 @@ class DefaultController extends Controller {
 
         // Get all logs
         $oManager = $this->getDoctrine()->getManager();
-        $oLogs = $oManager->getRepository('AppBundle:Log')->findAllByUser( $oUser, 'createstamp', 'ASC' );
+        $oLogs = $oManager->getRepository('KonomiBundle:Log')->findAllByUser( $oUser, 'createstamp', 'ASC' );
 
         // Create statistics array
         $aStatistics = array();
@@ -428,8 +428,8 @@ class DefaultController extends Controller {
     private function _checkFixExpends( $oManager, $oUser, $sFromDateStamp, $sToDateStamp ) {
 
         // Get fix income and expend templates of current user
-        $oFixIncomeTemplates = $oManager->getRepository('AppBundle:Template')->findByUserAndType( -2, $oUser->getUsername() );
-        $oFixExpendTemplates = $oManager->getRepository('AppBundle:Template')->findByUserAndType( -1, $oUser->getUsername() );
+        $oFixIncomeTemplates = $oManager->getRepository('KonomiBundle:Template')->findByUserAndType( -2, $oUser->getUsername() );
+        $oFixExpendTemplates = $oManager->getRepository('KonomiBundle:Template')->findByUserAndType( -1, $oUser->getUsername() );
 
         // Add fix logs
         $this->_addFixLog( $oFixIncomeTemplates, $oManager, $oUser, $sFromDateStamp, $sToDateStamp, -2);
@@ -462,7 +462,7 @@ class DefaultController extends Controller {
         foreach ( $oFixTemplates as $oFixTemplate ) {
 
             // Check if current expend template exists for current user and month
-            $oFixExpendLog = $oManager->getRepository('AppBundle:Log')->findByUserTypeCodeDescriptionAndDate( $oUser, $iType, $oFixTemplate->getCode(), $oFixTemplate->getDescription(), $sFromDateStamp, $sToDateStamp );
+            $oFixExpendLog = $oManager->getRepository('KonomiBundle:Log')->findByUserTypeCodeDescriptionAndDate( $oUser, $iType, $oFixTemplate->getCode(), $oFixTemplate->getDescription(), $sFromDateStamp, $sToDateStamp );
 
             // Create current fix expend template as fix log for current month
             if ( empty($oFixExpendLog) ) {

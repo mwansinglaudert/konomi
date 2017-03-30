@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle;
+namespace KonomiBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class AppBundle extends Bundle
+class KonomiBundle extends Bundle
 {
 }

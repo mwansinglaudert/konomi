@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Entity;
+namespace KonomiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @package konomi
  * @license <property of MWa/MiS>
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="KonomiBundle\Repository\UserRepository")
  */
 class User implements AdvancedUserInterface, \Serializable {
 

@@ -1,7 +1,7 @@
 <?php
 // AuthenticationHandler.php
 
-namespace AppBundle\Utility;
+namespace KonomiBundle\Utility;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
