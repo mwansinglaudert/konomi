@@ -5,6 +5,9 @@
 .idea
 *.iml
 
+# Build
+/build
+
 # Node
 node_modules
 /deploy.js

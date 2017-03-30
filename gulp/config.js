@@ -87,21 +87,13 @@ module.exports = {
             dest: 'fonts',
             extensions: ['woff', 'woff2', 'ttf', 'svg', 'eot']
         },
-        fonts: {
-            src: 'fonts',
-            dest: 'fonts',
-            extensions: ['woff', 'woff2', 'ttf', 'eot', 'svg'],
-            clean: true
-        },
         createBuildFiles: {
             src: './',
             dest: './build',
             files: [
-                'dist/**/**.*',
-                'functions/**/**.*',
-                'templates/**/**.*',
-                'db.php',
-                'index.php']
+                'app/**/**.*',
+                'src/**/**.*',
+                'web/dist/**/**.*']
         },
         removeBuildFiles: {
             src: './build'
