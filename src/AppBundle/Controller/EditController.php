@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Log;
+use AppBundle\Entity\Template;
 use AppBundle\Utility\CookieUtility;
 
 /**
@@ -263,6 +264,10 @@ class EditController extends Controller {
         $oUserFixExpendTemplates = $oManager->getRepository('AppBundle:Template')->findByUserAndType( -1, $oUser->getUsername() );
         $oUserFixIncomeTemplates = $oManager->getRepository('AppBundle:Template')->findByUserAndType( -2, $oUser->getUsername() );
 
+        // Update templates
+        $oUserFixExpendTemplates = $this->_updateTemplates( $oUserFixExpendTemplates );
+        $oUserFixIncomeTemplates = $this->_updateTemplates( $oUserFixIncomeTemplates );
+
         // Set template by AJAX status
         if ( $bAjax ) {
             $sTemplate = "ajax/newfix.html.twig";
@@ -299,5 +304,36 @@ class EditController extends Controller {
         // Check if current request is an AJAX (XML HTTP) request
         if ( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' ) { return TRUE; }
         return FALSE;
+    }
+
+
+    /**
+     * PRIVATE function that updates the link of each template of the given array
+     *
+     * @param array|object $oTemplates
+     * @return array|object
+     */
+    private function _updateTemplates( $oTemplates ) {
+
+        // Iterate over each template and build link
+        /** @var Template $oTemplate */
+        foreach ( $oTemplates as $oTemplate ) {
+
+            // Build and set link of current template
+            $aParameters = array();
+            foreach ( $oTemplate as $sKey => $sValue ) {
+                if ( $sValue instanceof \DateTime ) {
+                    $sValue = $sValue->format( "Y-m-d H:m:s" );
+                }
+                if ( $sKey != "link" && $sKey != "deleted" ) {
+                    $aParameters[] = $sKey."=".(string)$sValue;
+                }
+            }
+            $sLink = './edit?' . str_replace( " ", "%20", implode("&", $aParameters) );
+            $oTemplate->setLink( $sLink );
+        }
+
+        // Return updated templates
+        return $oTemplates;
     }
 }

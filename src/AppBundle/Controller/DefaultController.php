@@ -130,30 +130,8 @@ class DefaultController extends Controller {
             // Initialize balance
             $iBalance = 0;
 
-            // Iterate over each log and get balance
-            /** @var Log $oLog */
-            foreach ( $oLogs as $oLog ) {
-
-                // Calculate balance
-                $iType = intval($oLog->getType());
-                if ( $iType == 0 || $iType == -1 ) {
-                    $iBalance -= floatval( $oLog->getSum() );
-                }
-                else {
-                    $iBalance += floatval( $oLog->getSum() );
-                }
-
-                // Set link for current log entry
-                $aParameters = array();
-                foreach ( $oLog as $sKey => $sValue ) {
-                    if ( $sValue instanceof \DateTime ) {
-                        $sValue = $sValue->format( "Y-m-d H:m:s" );
-                    }
-                    $aParameters[] = $sKey."=".(string)$sValue;
-                }
-                $sLink = './edit?' . str_replace( " ", "%20", implode("&", $aParameters) );
-                $oLog->setLink( $sLink );
-            }
+            // Update logs and get balance
+            $oLogs = $this->_updateLogs( $oLogs, $iBalance );
 
             // Get number formatting
             $aNumberFormat = $this->getParameter("number_format");
@@ -493,51 +471,42 @@ class DefaultController extends Controller {
 
 
     /**
-     * PRIVATE function that generates a JSon string
+     * PRIVATE function that updates the link of each log of the given array and calculates the overall balance
      *
-     * @param array $data
-     * @param array $excluded
-     * @return string
+     * @param array|object $oLogs
+     * @param integer $iBalance
+     * @return array|object
      */
-    private function _generateJSonData( $data, $excluded=array() ) {
+    private function _updateLogs( $oLogs, &$iBalance ) {
 
-        // JSon string start
-        $sJSon = "[\n";
+        // Iterate over each log, calculate balance and build link
+        /** @var Log $oLog */
+        foreach ($oLogs as $oLog ) {
 
-        // JSon array
-        $aJSon = array();
-
-        // Iterate over given associative data array
-        foreach ( $data as $d ) {
-
-            // Start
-            $sJSon .= "{ ";
-
-            // Reset JSon array
-            $aJSonValue = array();
-
-            // Iterate over each value of current array
-            foreach ( $d as $key => $value ) {
-
-                // Continue if current key is not in the excluded array
-                if (! in_array($key, $excluded) ) {
-
-                    // If value is an integer, don't put it in quotes
-                    if ( is_int($value) ) {
-                        $aJSonValue[] = '"'.$key.'": '.$value."";
-                    } else {
-                        $aJSonValue[] = '"'.$key.'": "'.$value.'"';
-                    }
-                }
+            // Calculate balance
+            $iType = intval($oLog->getType());
+            if ( $iType == 0 || $iType == -1 ) {
+                $iBalance -= floatval( $oLog->getSum() );
+            }
+            else {
+                $iBalance += floatval( $oLog->getSum() );
             }
 
-            // End
-            $aJSon[] = "{ ". implode(", ", $aJSonValue) ." }";
+            // Build and set link of current template
+            $aParameters = array();
+            foreach ( $oLog as $sKey => $sValue ) {
+                if ( $sValue instanceof \DateTime ) {
+                    $sValue = $sValue->format( "Y-m-d H:m:s" );
+                }
+                if ( $sKey != "link" && $sKey != "deleted" ) {
+                    $aParameters[] = $sKey."=".(string)$sValue;
+                }
+            }
+            $sLink = './edit?' . str_replace( " ", "%20", implode("&", $aParameters) );
+            $oLog->setLink( $sLink );
         }
 
-        // JSon end
-        $sJSon = "[\n". implode(",\n", $aJSon) ."\n]";
-
-        return $sJSon;
+        // Return updated logs
+        return $oLogs;
     }
 }

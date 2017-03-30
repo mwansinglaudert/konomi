@@ -59,6 +59,11 @@ class Template {
     public $timestamp;
 
     /**
+     * @ORM\Column(type="string", length=512)
+     */
+    public $link;
+
+    /**
      * @ORM\Column(type="boolean", length=1)
      * @ORM\JoinColumn(nullable=false)
      */
@@ -190,6 +195,22 @@ class Template {
     public function setTimestamp($timestamp)
     {
         $this->timestamp = $timestamp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param mixed $link
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
     }
 
     /**
