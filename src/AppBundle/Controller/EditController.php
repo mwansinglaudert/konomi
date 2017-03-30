@@ -38,6 +38,14 @@ class EditController extends Controller {
         $aNumberFormat = $this->getParameter("number_format");
         $iSum = number_format( $iSum, intval($aNumberFormat["decimal"]), $aNumberFormat["decimal_point"], $aNumberFormat["thousand_sep"] );
 
+        // Create createstamp
+        $oCreationDateTime  = new \DateTime( $oRequest->query->get("createstamp") );
+        $oCreationDateTime->setTimezone( new \DateTimeZone($this->getParameter("date_time_zone")) );
+
+        // Create timestamp
+        $oDateTime  = new \DateTime( $oRequest->query->get("timestamp") );
+        $oDateTime->setTimezone( new \DateTimeZone($this->getParameter("date_time_zone")) );
+
         // Get parameters
         $aParams = array(
             'iID'           => $oRequest->query->get( "id" ),
@@ -45,9 +53,9 @@ class EditController extends Controller {
             'sDescription'  => $oRequest->query->get( "description" ),
             'sSum'          => $iSum,
             'iType'         => intval( $oRequest->query->get( "type" ) ),
-            'sTimestamp'    => $oRequest->query->get( "timestamp" ),
-            'sCreatestamp'  => $oRequest->query->get( "createstamp" ),
             'sUser'         => $oRequest->query->get( "user" ),
+            'sCreatestamp'  => $oCreationDateTime->format( 'Y-m-d\TH:i:s' ),
+            'sTimestamp'    => $oDateTime->format( 'Y-m-d\TH:i:s' ),
         );
 
         // Set template by AJAX status
@@ -219,7 +227,7 @@ class EditController extends Controller {
         $oResponse = $this->render( $sTemplate, [
             'sBaseDir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
             'sCookieWebApp' => $sCookieWebApp,
-            'sDateTime' => $oDateTime->format( "d-m-Y H:m:i" ),
+            'sDateTime' => $oDateTime->format( 'Y-m-d\TH:i:s' ),
             'oPublicIncomeTemplates' => $oPublicIncomeTemplates,
             'oPublicExpendTemplates' => $oPublicExpendTemplates,
         ]);
