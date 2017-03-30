@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * User entity class
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User implements UserInterface, \Serializable {
+class User implements AdvancedUserInterface, \Serializable {
 
     /**
      * @ORM\Column(type="string", length=11)
@@ -37,9 +38,25 @@ class User implements UserInterface, \Serializable {
     private $role;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(type="boolean", length=4, name="is_active")
      */
     private $isActive;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    public $createstamp;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    public $timestamp;
+
+
+
+
 
     public function __construct()
     {
@@ -48,35 +65,109 @@ class User implements UserInterface, \Serializable {
         // $this->salt = md5(uniqid(null, true));
     }
 
+
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getUsername()
     {
         return $this->user;
     }
 
+    /**
+     * @param mixed $username
+     */
     public function setUsername($username)
     {
         $this->user = $username;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPassword()
     {
         return $this->pass;
     }
 
+    /**
+     * @param mixed $password
+     */
     public function setPassword($password)
     {
         $this->pass = $password;
     }
 
+    /**
+     * @return mixed
+     */
     public function getRole()
     {
         return $this->role;
     }
 
+    /**
+     * @param mixed $role
+     */
     public function setRole($role)
     {
         $this->role = $role;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatestamp()
+    {
+        return $this->createstamp;
+    }
+
+    /**
+     * @param mixed $createstamp
+     */
+    public function setCreatestamp($createstamp)
+    {
+        $this->createstamp = $createstamp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimestamp()
+    {
+        return $this->timestamp;
+    }
+
+    /**
+     * @param mixed $timestamp
+     */
+    public function setTimestamp($timestamp)
+    {
+        $this->timestamp = $timestamp;
+    }
+
+
+
+
 
     public function getSalt()
     {
@@ -95,6 +186,26 @@ class User implements UserInterface, \Serializable {
     {
     }
 
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
@@ -103,6 +214,9 @@ class User implements UserInterface, \Serializable {
             $this->user,
             $this->pass,
             $this->role,
+            $this->isActive,
+            $this->createstamp,
+            $this->timestamp,
             // see section on salt below
             // $this->salt,
         ));
@@ -116,6 +230,9 @@ class User implements UserInterface, \Serializable {
             $this->user,
             $this->pass,
             $this->role,
+            $this->isActive,
+            $this->createstamp,
+            $this->timestamp,
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized);
