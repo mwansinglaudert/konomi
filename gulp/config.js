@@ -28,7 +28,7 @@ module.exports = {
             tasks: ['img', 'js', 'css']
         },
         browserSync: {
-            proxy: 'dev.mis.app.konomi',
+            proxy: 'dev.app.konomi',
             port: 9000,
             notify: false
         },
