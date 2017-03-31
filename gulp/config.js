@@ -3,8 +3,8 @@ var path = require('path');
 var fs = require('fs');
 var os = require('os');
 
-var SRC_PATH = './web/src/assets';
-var DEST_PATH = './web/dist/assets';
+var SRC_PATH = './symfony/web/src/assets';
+var DEST_PATH = './symfony/web/dist/assets';
 
 module.exports = {
     log: true,
@@ -91,9 +91,9 @@ module.exports = {
             src: './',
             dest: './build',
             files: [
-                'app/**/**.*',
-                'src/**/**.*',
-                'web/dist/**/**.*']
+                'symfony/app/**/**.*',
+                'symfony/src/**/**.*',
+                'symfony/web/dist/**/**.*']
         },
         removeBuildFiles: {
             src: './build'

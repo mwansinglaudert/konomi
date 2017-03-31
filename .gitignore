@@ -9,24 +9,24 @@
 /build
 
 # Node
-node_modules
+/node_modules
 /deploy.js
-/web/dist
+/symfony/web/dist
 
 # symfony / composer
-/composer.lock
-/vendor
+/symfony/composer.lock
+/symfony/vendor
 
 # Database
-/_db/*
-!/_db/konomi.sql
-!/_db/konomi_templates.csv
+/db/*
+!/db/konomi.sql
+!/db/konomi_templates.csv
 
 # Caching
-/var/cache/*
-!/var/cache/.gitkeep
-/var/logs/*
-!/var/logs/.gitkeep
-/var/sessions/*
-!/var/sessions/.gitkeep
-/var/bootstrap.php.cache
+/symfony/var/cache/*
+!/symfony/var/cache/.gitkeep
+/symfony/var/logs/*
+!/symfony/var/logs/.gitkeep
+/symfony/var/sessions/*
+!/symfony/var/sessions/.gitkeep
+/symfony/var/bootstrap.php.cache
