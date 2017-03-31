@@ -15,6 +15,7 @@
 
 # symfony / composer
 /symfony/composer.lock
+composer.lock
 /symfony/vendor
 
 # Database

@@ -4,17 +4,20 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "": "symfony/src/"
         },
         "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
+            "symfony/app/AppKernel.php",
+            "symfony/app/AppCache.php"
         ]
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "symfony/tests/"
         }
+    },
+    "config": {
+        "vendor-dir": "symfony/vendor/"
     },
     "require": {
         "php": ">=5.5.9",
@@ -51,14 +54,14 @@
         ]
     },
     "extra": {
-        "symfony-app-dir": "app",
-        "symfony-bin-dir": "bin",
-        "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
-        "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
+        "symfony-app-dir": "symfony/app",
+        "symfony-bin-dir": "symfony/bin",
+        "symfony-var-dir": "symfony/var",
+        "symfony-web-dir": "symfony/web",
+        "symfony-tests-dir": "symfony/tests",
+        "symfony-assets-install": "symfony/relative",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+            "file": "symfony/app/config/parameters.yml"
         },
         "branch-alias": null
     }
