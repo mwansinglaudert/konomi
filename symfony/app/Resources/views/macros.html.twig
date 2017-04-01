@@ -116,8 +116,6 @@
                     {{ iYear }}<br>
                 </h2>
                 <p class="average">
-                    <strong>{% trans %}app.label.statistic.average_total{% endtrans %}</strong> {{ aMonths.info.average_total|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %} |
-                    <strong>{% trans %}app.label.statistic.average_total_without_fix{% endtrans %}</strong> {{ aMonths.info.average_total_without_fix|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %}<br>
                     <strong>{% trans %}app.label.statistic.average_fix{% endtrans %}</strong> {{ aMonths.info.average_fix|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %} |
                     <strong>{% trans %}app.label.statistic.average_normal{% endtrans %}</strong> {{ aMonths.info.average_normal|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %} |
                     <strong>{% trans %}app.label.statistic.average_fuel{% endtrans %}</strong> {{ aMonths.info.average_fuel|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %}
