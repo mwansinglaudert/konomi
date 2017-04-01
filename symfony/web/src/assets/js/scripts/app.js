@@ -305,11 +305,12 @@
                 success: function (data) {
                     if (data.indexOf('class="login-error"') < 0) {
                         $.ajax({
-                            url: './start',
+                            url: './',
                             type: 'POST',
                             success: function (data) {
-                                var content = $('<div>').append(data).find('.body').html();
-                                $('.body').html(content);
+                                console.log(url, data);
+                                var content = $('<div>').append(data).find('body').html();
+                                $('body').html(content);
                                 login.init();
                                 scrollHandling.init();
                                 ajaxModal.init();
@@ -354,8 +355,9 @@
                 type: 'GET',
                 success: function (data) {
                     var content = $('<div>').append(data).find('.body').html();
-                    $('.body').html(content);
+                    $('.view--start .view-body').html(content);
                     setTimeout(function () {
+                        views.setView('start', false);
                         ajaxModal.closeModal();
                         login.init();
                         scrollHandling.init();
@@ -396,8 +398,18 @@
         },
         fnAfter: {
             start: function () {
-                scrollHandling.rebuild();
                 countUp.init();
+            },
+            user: function () {
+                ajaxModal.init();
+                ajaxStandard.init();
+            },
+            calendar: function () {
+                ajaxModal.init();
+                ajaxStandard.init();
+            },
+            statistic: function () {
+
             }
         },
         loadView: function (sViewName, bCall, callback) {
@@ -415,6 +427,7 @@
                         views.fnAfter[sViewName]();
                     }
                     if(bCall){
+                        scrollHandling.rebuild();
                         callback();
                     }
                 }

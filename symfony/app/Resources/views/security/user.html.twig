@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% import "macros.html.twig" as macros %}
 {% block title %}Encrypt password{% endblock %}
 
 
@@ -22,13 +23,8 @@
 
 
 {% block body %}
-    <div class="login">
-        <div class="login-content">
-            <img class="logo" src="dist/assets/img/logo.png" height="96" alt="logo">
-            {% if app.user %}
-                {{ foo }}
-            {% endif %}
-        </div>
+    <div class="body">
+        {{ macros.user(_context) }}
     </div>
 {% endblock %}
 

@@ -25,10 +25,6 @@
 {% macro appheader(variables) %}
 <div class="ios-header ios-header-brand">
     <div class="ios-header-name">{% trans %}app.title{% endtrans %}</div>
-    <a class="ion-btn pull-right js-open-ajaxmodal" href="./newfix"
-       title="{% trans %}app.label.newFixLog{% endtrans %}">
-        <i class="ion ion-ios-plus"></i>
-    </a>
 </div>
 {% endmacro appheader %}
 
@@ -343,6 +339,9 @@
                                value="{{ variables.sDateTime }}">
                         <span>&nbsp;</span>
                     </li>
+                    <li style="display: none; visibility: hidden;">
+                        <button type="submit">Submit</button>
+                    </li>
                 </ul>
             </div>
         </form>
@@ -435,20 +434,36 @@
     </div>
 {% endmacro newfix %}
 
+{% macro user(variables) %}
+    <h1>Userpage</h1>
+    <div>
+        <a class="ion-btn js-open-ajaxmodal" href="./newfix"
+           title="{% trans %}app.label.newFixLog{% endtrans %}">
+            {% trans %}app.label.newFixLog{% endtrans %}
+        </a>
+    </div>
+    <div>
+        <a href="./logout" class="ion-btn js--ajax" title="Logout '{{ variables.app.user.username }}'">
+            LOGOUT
+        </a>
+    </div>
+{% endmacro user %}
 
 {% macro modal(variables) %}
     <div class="modal">
-        <div class="ios-header ios-header-brand">
-            <button class="ion-btn js-close-ajaxmodal pull-left">
-                <i class="ion-ios-arrow-back"></i>
-            </button>
-            <div id="modal-header" class="ios-header-name"></div>
-            <button class="ion-btn pull-right js--submit-modal-form" style="display: none;">
-                <span class="ion-text">{% trans %}app.button.save{% endtrans %}</span>
-            </button>
-        </div>
-        <div class="modal-content">
-            <div class="loading"><i></i><span>{% trans %}app.label.loading{% endtrans %}</span></div>
+        <div class="modal-view">
+            <div class="ios-header ios-header-brand">
+                <button class="ion-btn js-close-ajaxmodal pull-left">
+                    <i class="ion-ios-close-empty"></i>
+                </button>
+                <div id="modal-header" class="ios-header-name"></div>
+                <button class="ion-btn pull-right js--submit-modal-form" style="display: none;">
+                    <span class="ion-text">{% trans %}app.button.save{% endtrans %}</span>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="loading"><i></i><span>{% trans %}app.label.loading{% endtrans %}</span></div>
+            </div>
         </div>
     </div>
 {% endmacro modal %}
@@ -481,19 +496,16 @@
                 </a>
             </li>
             <li class="view-navigation-list-item">
-                {#<a href="./statistic" class="ion-btn js-open-ajaxmodal" title="{% trans %}app.label.statistic{% endtrans %}">#}
-                {#<i class="ion-ios-pulse"></i>#}
-                {#</a>#}
                 <span data-set-view="statistic" class="ion-btn">
                     <i class="ion-ios-pulse"></i>
                     <i class="ion-ios-pulse-strong"></i>
                 </span>
             </li>
             <li class="view-navigation-list-item">
-                <a href="./logout" class="ion-btn js--ajax" title="Logout '{{ variables.app.user.username }}'">
+                <span data-set-view="user" class="ion-btn">
                     <i class="ion-ios-person-outline"></i>
                     <i class="ion-ios-person"></i>
-                </a>
+                </span>
             </li>
         </ul>
     </div>

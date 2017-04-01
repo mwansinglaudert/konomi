@@ -7,7 +7,7 @@
   body._anim._modal &{
     transition: #{$modal-speed} #{$modal-in};
   }
-  transform: translate(100%,0%);
+  transform: translate(0%,100%);
   box-shadow: 0 0 20px rgba(0,0,0,0.0);
   body._modal &{
     transform: translate(0%,0%);

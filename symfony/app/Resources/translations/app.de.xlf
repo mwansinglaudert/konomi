@@ -280,7 +280,8 @@
             </trans-unit>
             <trans-unit id="app.label.log.code.supplements">
                 <source>app.label.log.code.supplements</source>
-                <target>Nahrungsergänzung</target>
+                <target>Supplements</target>
+                <!--Nahrungsergänzungsmittel ist zu lang 🤢 -->
             </trans-unit>
             <trans-unit id="app.label.log.code.other">
                 <source>app.label.log.code.other</source>
