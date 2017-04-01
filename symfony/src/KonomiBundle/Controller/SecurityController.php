@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use KonomiBundle\Utility\CookieUtility;
+use KonomiBundle\Entity\User;
 
 /**
  * konomi security controller class
@@ -39,6 +40,7 @@ class SecurityController extends Controller {
         if ( empty($sPlainPass) ) { $sPlainPass = 'password'; }
 
         // Encode password
+        /** @var User $oUser */
         $oUser = new \KonomiBundle\Entity\User();
         $oEncoder = $this->container->get('security.password_encoder');
         $sEncodedPass = $oEncoder->encodePassword($oUser, $sPlainPass);
@@ -48,6 +50,30 @@ class SecurityController extends Controller {
             'sCookieWebApp' => $sCookieWebApp,
             'sPlainPass' => $sPlainPass,
             'sEncodedPass' => $sEncodedPass,
+        ]);
+    }
+
+
+    /**
+     * User Action for the user page
+     *
+     * @Route("/user", name="user")
+     * @param Request $oRequest
+     * @return object
+     */
+    public function userAction( Request $oRequest ) {
+
+        // Initialize cookie utility and get cookie webapp value
+        $oCookieUtility = new CookieUtility();
+        $sCookieWebApp = $oCookieUtility->get( 'webapp' );
+
+        // Do something...
+        $foo = "bar";
+
+        // replace this example code with whatever you need
+        return $this->render('security/user.html.twig', [
+            'sCookieWebApp' => $sCookieWebApp,
+            'foo' => $foo,
         ]);
     }
 
