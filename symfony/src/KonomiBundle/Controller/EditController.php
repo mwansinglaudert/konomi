@@ -117,7 +117,7 @@ class EditController extends Controller {
 
         // Set number formatting
         $aNumberFormat = $this->getParameter("number_format");
-        $iSum = number_format( $iSum, intval($aNumberFormat["decimal"]), ".", "," );
+        $iSum = number_format( $iSum, intval($aNumberFormat["decimal"]), ".", "" );
 
         // Check if a new log should be saved or an existing one updated
         if ( $bNew ) {
