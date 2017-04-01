@@ -1,0 +1,23 @@
+.view {
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom:$nav-height;
+
+  &:not(.view--active) {
+    display: none;
+    visibility: hidden;
+  }
+
+  &-body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top:$header-height;
+    ._standalone &{
+      top: $header-height-large;
+    }
+  }
+}

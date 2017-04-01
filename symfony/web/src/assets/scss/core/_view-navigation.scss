@@ -1,0 +1,38 @@
+.view-navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: $nav-height;
+  border-top: 1px solid $grey;
+  background: $offwhite;
+  background:#fafafa;
+  &-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    &-item {
+      display: table-cell;
+      &--active {
+        color: $brand-color;
+      }
+    }
+  }
+  .ion-btn {
+    line-height: $nav-height;
+    text-align: center;
+    width: 100%;
+    font-size: $nav-icon-size;
+  }
+}
+
+i[class*="ion"]:first-child {
+  .view-navigation-list-item:not(.view-navigation-list-item--active) & + i,
+  .view-navigation-list-item.view-navigation-list-item--active & {
+    display: none;
+    visibility: hidden;
+  }
+}

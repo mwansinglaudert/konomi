@@ -72,9 +72,9 @@ module.exports = {
                 ]
             }
         },
-        php: {
-            src: './',
-            extensions: ['php']
+        twig: {
+            src: 'symfony/app/resources',
+            extensions: ['twig','']
         },
         img: {
             src: 'img',

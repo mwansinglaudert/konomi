@@ -10,8 +10,10 @@
             {% endif %}
             <form class="js--login-form" action="{{ path('login') }}" method="post">
                 {#<input type="hidden" name="_target_path" value="/overview" />#}
-                <input class="input-user" type="text" id="user" name="_username" placeholder="{% trans %}app.label.username{% endtrans %}" value="{{ variables.last_username }}">
-                <input class="input-password" type="password" id="pass" name="_password" placeholder="{% trans %}app.label.password{% endtrans %}" value="">
+                <input class="input-user" type="text" id="user" name="_username"
+                       placeholder="{% trans %}app.label.username{% endtrans %}" value="{{ variables.last_username }}">
+                <input class="input-password" type="password" id="pass" name="_password"
+                       placeholder="{% trans %}app.label.password{% endtrans %}" value="">
                 {#<input type="checkbox" id="remember_me" name="_remember_me" checked />#}
                 {#<label for="remember_me">Keep me logged in</label>#}
                 <button type="submit">{% trans %}app.button.login{% endtrans %}</button>
@@ -20,24 +22,18 @@
     </div>
 {% endmacro login %}
 
+{% macro appheader(variables) %}
+<div class="ios-header ios-header-brand">
+    <div class="ios-header-name">{% trans %}app.title{% endtrans %}</div>
+    <a class="ion-btn pull-right js-open-ajaxmodal" href="./newfix"
+       title="{% trans %}app.label.newFixLog{% endtrans %}">
+        <i class="ion ion-ios-plus"></i>
+    </a>
+</div>
+{% endmacro appheader %}
 
 {% macro start(variables) %}
     <div class="dashboard">
-        <div class="ios-header ios-header-brand">
-            <a href="./logout" class="ion-btn pull-left js--ajax" title="Logout '{{ variables.app.user.username }}'">
-                <i class="ion ion-ios-person"></i>
-            </a>
-            <a href="./statistic" class="ion-btn pull-left js-open-ajaxmodal" title="{% trans %}app.label.statistic{% endtrans %}">
-                <i class="ion ion-pie-graph"></i>
-            </a>
-            <div class="ios-header-name">{% trans %}app.title{% endtrans %}</div>
-            <a class="ion-btn pull-right js-open-ajaxmodal" href="./newfix" title="{% trans %}app.label.newFixLog{% endtrans %}">
-                <i class="ion ion-ios-plus"></i>
-            </a>
-            <a class="ion-btn pull-right js-open-ajaxmodal" href="./new?yearmonth={{ variables.sYearMonth }}" title="{% trans %}app.label.newLog{% endtrans %}">
-                <i class="ion ion-ios-plus-outline"></i>
-            </a>
-        </div>
         <div class="dashboard-display">
             <div class="dashboard-hero">
                 <h1 class="dashboard-hero-balance">
@@ -45,10 +41,10 @@
                     <span class="dashboard-hero-currency">{% trans %}app.currency{% endtrans %}</span>
                 </h1>
                 <div class="dashboard-hero-date">
-                    <a href="./calendar" class="js-open-ajaxmodal">
+                    <div>
                         <span class="dashboard-hero-month">{{ ('app.label.month.' ~ variables.iMonth)|trans }}</span>
                         <span class="dashboard-hero-year">{{ variables.iYear }}</span>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,7 +60,8 @@
                             <small>{{ oLog.description }}</small>
                         </td>
                         <td style="text-align: right; white-space: nowrap">
-                            {{ oLog.sum|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %}
+                            {{ oLog.sum|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}
+                            app.currency{% endtrans %}
                         </td>
                         <td>
                             {% if oLog.type == 1 %}<span style="color:green;">&uarr;</span>{% endif %}
@@ -72,7 +69,8 @@
                             {% if oLog.type == -1 %}<span style="color:darkgray;">&darr;</span>{% endif %}
                             {% if oLog.type == -2 %}<span style="color:green;">&uarr;</span>{% endif %}
                         </td>
-                        <td><a href="{{ oLog.link }}" class="btn-edit js-open-ajaxmodal"><i class="dot"></i></a></td>
+                        <td><a href="{{ oLog.link }}" class="btn-edit js-open-ajaxmodal"><i class="dot"></i></a>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>
@@ -93,7 +91,8 @@
 
                     {% for iMonth in aMonths %}
                         <li class="ios-text-link">
-                            <a class="js-calender-link" href="./start?year={{ iYear }}&month={{ iMonth }}">{{ ('app.label.month.' ~ iMonth)|trans }}</a>
+                            <a class="js-calender-link"
+                               href="./start?year={{ iYear }}&month={{ iMonth }}">{{ ('app.label.month.' ~ iMonth)|trans }}</a>
                         </li>
                     {% endfor %}
 
@@ -116,11 +115,21 @@
                     {{ iYear }}<br>
                 </h2>
                 <p class="average">
-                    <strong>{% trans %}app.label.statistic.average_total{% endtrans %}</strong> {{ aMonths.info.average_total|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %} |
-                    <strong>{% trans %}app.label.statistic.average_total_without_fix{% endtrans %}</strong> {{ aMonths.info.average_total_without_fix|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %}<br>
-                    <strong>{% trans %}app.label.statistic.average_fix{% endtrans %}</strong> {{ aMonths.info.average_fix|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %} |
-                    <strong>{% trans %}app.label.statistic.average_normal{% endtrans %}</strong> {{ aMonths.info.average_normal|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %} |
-                    <strong>{% trans %}app.label.statistic.average_fuel{% endtrans %}</strong> {{ aMonths.info.average_fuel|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}app.currency{% endtrans %}
+                    <strong>{% trans %}
+                        app.label.statistic.average_total{% endtrans %}</strong> {{ aMonths.info.average_total|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}
+                    app.currency{% endtrans %} |
+                    <strong>{% trans %}
+                        app.label.statistic.average_total_without_fix{% endtrans %}</strong> {{ aMonths.info.average_total_without_fix|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}
+                    app.currency{% endtrans %}<br>
+                    <strong>{% trans %}
+                        app.label.statistic.average_fix{% endtrans %}</strong> {{ aMonths.info.average_fix|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}
+                    app.currency{% endtrans %} |
+                    <strong>{% trans %}
+                        app.label.statistic.average_normal{% endtrans %}</strong> {{ aMonths.info.average_normal|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}
+                    app.currency{% endtrans %} |
+                    <strong>{% trans %}
+                        app.label.statistic.average_fuel{% endtrans %}</strong> {{ aMonths.info.average_fuel|number_format(variables.aNumberFormat.decimal, variables.aNumberFormat.decimal_point, variables.aNumberFormat.thousand_sep) }}{% trans %}
+                    app.currency{% endtrans %}
                 </p>
                 <div id="chart{{ iYear }}" style="height:400px;">
                     <svg></svg>
@@ -133,16 +142,16 @@
                             "nonStackable": false,
                             "values": [
                                 {% for iMonth, aMonth in aMonths %}
-                                    {% for sKey, iSum in aMonth %}
-                                        {% if sKey == 'fix' %}
-                                            {
-                                                "x": {{ iMonth }},
-                                                "y": {{ iSum }},
-                                                "series": 0,
-                                                "key": "fix"
-                                            },
-                                        {% endif %}
-                                    {% endfor %}
+                                {% for sKey, iSum in aMonth %}
+                                {% if sKey == 'fix' %}
+                                {
+                                    "x": {{ iMonth }},
+                                    "y": {{ iSum }},
+                                    "series": 0,
+                                    "key": "fix"
+                                },
+                                {% endif %}
+                                {% endfor %}
                                 {% endfor %}
                             ]
                         },
@@ -151,16 +160,16 @@
                             "nonStackable": false,
                             "values": [
                                 {% for iMonth, aMonth in aMonths %}
-                                    {% for sKey, iSum in aMonth %}
-                                        {% if sKey == 'normal' %}
-                                            {
-                                                "x": {{ iMonth }},
-                                                "y": {{ iSum }},
-                                                "series": 0,
-                                                "key": "normal"
-                                            },
-                                        {% endif %}
-                                    {% endfor %}
+                                {% for sKey, iSum in aMonth %}
+                                {% if sKey == 'normal' %}
+                                {
+                                    "x": {{ iMonth }},
+                                    "y": {{ iSum }},
+                                    "series": 0,
+                                    "key": "normal"
+                                },
+                                {% endif %}
+                                {% endfor %}
                                 {% endfor %}
                             ]
                         },
@@ -169,39 +178,39 @@
                             "nonStackable": false,
                             "values": [
                                 {% for iMonth, aMonth in aMonths %}
-                                    {% for sKey, iSum in aMonth %}
-                                        {% if sKey == 'fuel' %}
-                                            {
-                                                "x": {{ iMonth }},
-                                                "y": {{ iSum }},
-                                                "series": 0,
-                                                "key": "fuel"
-                                            },
-                                        {% endif %}
-                                    {% endfor %}
+                                {% for sKey, iSum in aMonth %}
+                                {% if sKey == 'fuel' %}
+                                {
+                                    "x": {{ iMonth }},
+                                    "y": {{ iSum }},
+                                    "series": 0,
+                                    "key": "fuel"
+                                },
+                                {% endif %}
+                                {% endfor %}
                                 {% endfor %}
                             ],
                         }
                     ];
                     nv.addGraph({
-                        generate: function() {
+                        generate: function () {
                             var width = nv.utils.windowSize().width,
                                 height = '400';
 
                             var chart = nv.models.multiBarChart()
-                                .width(width)
-                                .height(height)
-                                .stacked(true)
-                                .showXAxis(true)
-                                .showYAxis(true)
-        //                        .xDomain(['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']);
+                                    .width(width)
+                                    .height(height)
+                                    .stacked(true)
+                                    .showXAxis(true)
+                                    .showYAxis(true)
+                                //                        .xDomain(['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']);
                             ;
 
-                            chart.dispatch.on('renderEnd', function(){
+                            chart.dispatch.on('renderEnd', function () {
                                 console.log('Render Complete');
                             });
 
-        //                    chart.barColor(["#FF0000","#00FF00","#0000FF"]);
+                            //                    chart.barColor(["#FF0000","#00FF00","#0000FF"]);
 
                             var svg = d3.select('#chart{{ iYear }} svg').datum(charData{{ iYear }});
                             console.log('calling chart');
@@ -209,13 +218,13 @@
 
                             nv.utils.windowResize(function () {
                                 chart.update();
-        //                        drawLimit(chart, svg, limits);
+                                //                        drawLimit(chart, svg, limits);
                             });
 
                             return chart;
                         },
-                        callback: function(graph) {
-                            nv.utils.windowResize(function() {
+                        callback: function (graph) {
+                            nv.utils.windowResize(function () {
                                 var width = nv.utils.windowSize().width;
                                 var height = nv.utils.windowSize().height;
                                 graph.width(width).height(height);
@@ -244,7 +253,9 @@
         <form class="js--post-form" action="./save" method="post">
             <input type="hidden" name="delete" value="0">
             <div class="_scroll">
-                <h2 class="modal-headline">{{ ('app.label.log.code.' ~ variables.aParams.sCode)|trans }} <small>({{ variables.aParams.sCreatestamp|date("d-m-Y H:m:i") }})</small></h2>
+                <h2 class="modal-headline">{{ ('app.label.log.code.' ~ variables.aParams.sCode)|trans }}
+                    <small>({{ variables.aParams.sCreatestamp|date("d-m-Y H:m:i") }})</small>
+                </h2>
                 <ul class="ios-list">
                     {% for sParam, sValue in variables.aParams %}
                         {% if sParam != 'sUser' and sParam != 'sTimestamp' and sParam != 'iType' %}
@@ -252,7 +263,9 @@
                                 <input id="edit{{ sParam }}" name="{{ sParam }}" type="hidden" value="{{ sValue }}">
                             {% else %}
                                 <li class="ios-text-input {% if sParam == 'sSum' %}ios-text-input-brand{% endif %}">
-                                    <input required="required" id="edit{{ sParam }}" name="{{ sParam }}" type="{% if sParam == 'sCreatestamp' %}datetime-local{% else %}text{% endif %}" value="{{ sValue }}">
+                                    <input required="required" id="edit{{ sParam }}" name="{{ sParam }}"
+                                           type="{% if sParam == 'sCreatestamp' %}datetime-local{% else %}text{% endif %}"
+                                           value="{{ sValue }}">
                                     <span for="edit{{ sParam }}">
                                         {% if sParam == 'sSum' %}
                                             {% trans %}app.label.sum{% endtrans %}{% trans %}app.currency{% endtrans %}
@@ -291,8 +304,10 @@
         <form class="js--post-form" action="./save" method="post">
             <input type="hidden" id="saveNew" name="saveNew" value="1">
             <input type="hidden" id="logImage" name="sCode">
-            <input class="js--log-segmented-control" id="type-01" data-segmented-control="1" value="0" type="radio" checked name="iType">
-            <input class="js--log-segmented-control" id="type-02" data-segmented-control="2" value="1" type="radio" name="iType">
+            <input class="js--log-segmented-control" id="type-01" data-segmented-control="1" value="0" type="radio"
+                   checked name="iType">
+            <input class="js--log-segmented-control" id="type-02" data-segmented-control="2" value="1" type="radio"
+                   name="iType">
             <div class="ios-segmented-controls">
                 <label for="type-01">{% trans %}app.button.expend{% endtrans %}</label>
                 <label for="type-02">{% trans %}app.button.income{% endtrans %}</label>
@@ -303,7 +318,8 @@
                         <div class="horizontal-radio _scroll-full" data-segmented-content="1">
                             {% for iKey, aTemplate in variables.oPublicExpendTemplates %}
                                 <div class="radio">
-                                    <input id="name{{ iKey }}0" type="radio" class="js--template-name" name="sCode" data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
+                                    <input id="name{{ iKey }}0" type="radio" class="js--template-name" name="sCode"
+                                           data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
                                     <label for="name{{ iKey }}0">
                                         <div class="template-sprite template-sprite-circle template-sprite-{{ aTemplate.code }}"></div>
                                         <span>{{ ('app.label.log.code.' ~ aTemplate.code)|trans }}</span>
@@ -314,7 +330,8 @@
                         <div class="horizontal-radio _scroll-full" data-segmented-content="2">
                             {% for iKey, aTemplate in variables.oPublicIncomeTemplates %}
                                 <div class="radio">
-                                    <input id="name{{ iKey }}1" type="radio" class="js--template-name" name="sCode" data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
+                                    <input id="name{{ iKey }}1" type="radio" class="js--template-name" name="sCode"
+                                           data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
                                     <label for="name{{ iKey }}1">
                                         <div class="template-sprite template-sprite-circle template-sprite-{{ aTemplate.code }}"></div>
                                         <span>{{ ('app.label.log.code.' ~ aTemplate.code)|trans }}</span>
@@ -334,7 +351,8 @@
                         <span>{% trans %}app.label.sum{% endtrans %}{% trans %}app.currency{% endtrans %}</span>
                     </li>
                     <li class="ios-text-input">
-                        <input id="log-createstamp" type="datetime-local" required="required" name="sCreatestamp" value="{{ variables.sDateTime }}">
+                        <input id="log-createstamp" type="datetime-local" required="required" name="sCreatestamp"
+                               value="{{ variables.sDateTime }}">
                         <span>&nbsp;</span>
                     </li>
                 </ul>
@@ -353,8 +371,10 @@
         <form class="js--post-form" action="./savefix" method="post">
             <input type="hidden" id="saveNew" name="saveNew" value="1">
             <input type="hidden" id="logImage" name="sCode">
-            <input class="js--log-segmented-control" id="type-01" data-segmented-control="1" value="-1" type="radio" checked name="iType">
-            <input class="js--log-segmented-control" id="type-02" data-segmented-control="2" value="-2" type="radio" name="iType">
+            <input class="js--log-segmented-control" id="type-01" data-segmented-control="1" value="-1" type="radio"
+                   checked name="iType">
+            <input class="js--log-segmented-control" id="type-02" data-segmented-control="2" value="-2" type="radio"
+                   name="iType">
             <div class="ios-segmented-controls">
                 <label for="type-01">{% trans %}app.button.fixexpend{% endtrans %}</label>
                 <label for="type-02">{% trans %}app.button.fixincome{% endtrans %}</label>
@@ -365,7 +385,8 @@
                         <div class="horizontal-radio _scroll-full" data-segmented-content="1">
                             {% for iKey, aTemplate in variables.oPublicExpendTemplates %}
                                 <div class="radio">
-                                    <input id="name{{ iKey }}0" type="radio" class="js--template-name" name="sCode" data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
+                                    <input id="name{{ iKey }}0" type="radio" class="js--template-name" name="sCode"
+                                           data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
                                     <label for="name{{ iKey }}0">
                                         <div class="template-sprite template-sprite-circle template-sprite-{{ aTemplate.code }}"></div>
                                         <span>{{ ('app.label.log.code.' ~ aTemplate.code)|trans }}</span>
@@ -376,7 +397,8 @@
                         <div class="horizontal-radio _scroll-full" data-segmented-content="2">
                             {% for iKey, aTemplate in variables.oPublicIncomeTemplates %}
                                 <div class="radio">
-                                    <input id="name{{ iKey }}1" type="radio" class="js--template-name" name="sCode" data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
+                                    <input id="name{{ iKey }}1" type="radio" class="js--template-name" name="sCode"
+                                           data-image="{{ aTemplate.code }}" value="{{ aTemplate.code }}">
                                     <label for="name{{ iKey }}1">
                                         <div class="template-sprite template-sprite-circle template-sprite-{{ aTemplate.code }}"></div>
                                         <span>{{ ('app.label.log.code.' ~ aTemplate.code)|trans }}</span>
@@ -397,7 +419,8 @@
                     </li>
                 </ul>
 
-                <h4>{% trans %}app.label.existingFixLogs{% endtrans %} ({% trans %}app.button.income{% endtrans %} / {% trans %}app.button.expend{% endtrans %})</h4>
+                <h4>{% trans %}app.label.existingFixLogs{% endtrans %} ({% trans %}app.button.income{% endtrans %}
+                    / {% trans %}app.button.expend{% endtrans %})</h4>
                 <ul class="ios-list horizontal-radio">
                     {% for iKey, aTemplate in variables.oUserFixIncomeTemplates %}
                         <li class="radio">
@@ -441,3 +464,49 @@
         </div>
     </div>
 {% endmacro modal %}
+
+{% macro navigation(variables) %}
+    <div class="view-navigation">
+        <ul class="view-navigation-list">
+            <li class="view-navigation-list-item">
+                {#<a href="./start" class="ion-btn js--ajax" title="Logout '{{ variables.app.user.username }}'">#}
+                {#<i class="ion ion-ios-home-outline"></i>#}
+                {#</a>#}
+                <span data-set-view="start" class="ion-btn">
+                    <i class="ion ion-ios-home-outline"></i>
+                    <i class="ion ion-ios-home"></i>
+                </span>
+            </li>
+            <li class="view-navigation-list-item">
+                {#<a href="./calendar" class="ion-btn js-open-ajaxmodal">#}
+                {#<i class="ion ion-ios-calendar-outline"></i>#}
+                {#</a>#}
+                <span data-set-view="calendar" class="ion-btn">
+                    <i class="ion ion-ios-calendar-outline"></i>
+                    <i class="ion ion-ios-calendar"></i>
+                </span>
+            </li>
+            <li class="view-navigation-list-item">
+                <a class="ion-btn js-open-ajaxmodal" href="./new?yearmonth={{ variables.sYearMonth }}"
+                   title="{% trans %}app.label.newLog{% endtrans %}">
+                    <i class="ion ion-ios-plus-outline"></i>
+                </a>
+            </li>
+            <li class="view-navigation-list-item">
+                {#<a href="./statistic" class="ion-btn js-open-ajaxmodal" title="{% trans %}app.label.statistic{% endtrans %}">#}
+                {#<i class="ion-ios-pulse"></i>#}
+                {#</a>#}
+                <span data-set-view="statistic" class="ion-btn">
+                    <i class="ion-ios-pulse"></i>
+                    <i class="ion-ios-pulse-strong"></i>
+                </span>
+            </li>
+            <li class="view-navigation-list-item">
+                <a href="./logout" class="ion-btn js--ajax" title="Logout '{{ variables.app.user.username }}'">
+                    <i class="ion-ios-person-outline"></i>
+                    <i class="ion-ios-person"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endmacro navigation %}

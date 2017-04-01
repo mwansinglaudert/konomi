@@ -24,7 +24,29 @@
 
 {% block body %}
     <div class="body">
-        {{ macros.start(_context) }}
+        <div data-view="./start" class="view view--start">
+            {{ macros.appheader(_context) }}
+            <div class="view-body">
+                {{ macros.start(_context) }}
+            </div>
+        </div>
+        <div data-view="./calendar" class="view view--calendar">
+            <div class="ios-header ios-header-brand">
+                <div class="ios-header-name">Kalender</div>
+            </div>
+        </div>
+        <div data-view="./statistic" class="view view--statistic">
+            <div class="ios-header ios-header-brand">
+                <div class="ios-header-name">Widgets</div>
+            </div>
+        </div>
+        <div data-view="./user" class="view view--user">
+            <div class="ios-header ios-header-brand">
+                <div class="ios-header-name">Benutzerkonto</div>
+            </div>
+
+        </div>
+        {{ macros.navigation(_context) }}
         {{ macros.modal(_context) }}
     </div>
 {% endblock %}

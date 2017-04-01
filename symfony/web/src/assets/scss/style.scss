@@ -3,6 +3,8 @@
 @import "core/base";
 @import "ionicons/ionicons";
 
+@import "core/view";
+@import "core/view-navigation";
 @import "core/dashboard-layout";
 @import "core/dashboard-style";
 @import "core/dashboard-hero";
@@ -25,3 +27,8 @@
 
 @import "core/ios-style";
 @import "nvd3/_nvd3";
+
+
+.sf-display-none {
+ display: none !important;
+}

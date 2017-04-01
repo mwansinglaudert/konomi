@@ -1,5 +1,6 @@
 $body-bg-color: #fff;
 $light-grey:#f5f5f5;
+$offwhite: $light-grey;
 $grey:#ddd;
 $text-color: #212121;
 $text-color-grey: #8E8E93;
@@ -18,3 +19,11 @@ $font-size-extralarge: $font-size-normal*3;
 $modal-speed: .3s;
 $modal-in: cubic-bezier(0.135, 0.485, 0.165, 1.000);
 $modal-out: cubic-bezier(0.600, 0.040, 0.820, 0.310);
+
+$display-height: 55%;
+$log-height: 45%;
+$action-height:0px;
+$header-height: 44px;
+$header-height-large: 64px;
+$nav-height:54px;
+$nav-icon-size:28px;

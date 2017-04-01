@@ -1,12 +1,6 @@
-$display-height: 60%;
-$log-height: 40%;
-$action-height:0px;
-$header-height: 44px;
-$header-height-large: 64px;
-
 .dashboard {
-  position: fixed;
-  top:$header-height;
+  position: absolute;
+  top:0;
   left: 0;
   right: 0;
   bottom:0;
@@ -15,7 +9,6 @@ $header-height-large: 64px;
     top:$header-height*-1;
   }
   ._standalone &{
-    top: $header-height-large;
     .ios-header {
       top:$header-height-large*-1;
     }

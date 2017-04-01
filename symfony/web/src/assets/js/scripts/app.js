@@ -235,15 +235,9 @@
             $(ajaxModal.modal.header).html('');
             $.post(url, $(el).serialize(), function (data) {
                 if (data == 'success') {
-                    $.ajax({
-                        url: './start',
-                        type: 'GET',
-                        success: function (data) {
-                            var content = $('<div>').append(data).find('.dashboard').html();
-                            $('.dashboard').html(content);
-                            ajaxModal.closeModal(true);
-                        }
-                    });
+                    views.setView('start', true, true, function () {
+                        ajaxModal.closeModal(true);
+                    })
                 }
             });
         },
@@ -307,9 +301,9 @@
             $.ajax({
                 url: './login',
                 type: 'POST',
-                data: { _username: formData[0]['value'], _password: formData[1]['value'] },
+                data: {_username: formData[0]['value'], _password: formData[1]['value']},
                 success: function (data) {
-                    if ( data.indexOf('class="login-error"') < 0 ) {
+                    if (data.indexOf('class="login-error"') < 0) {
                         $.ajax({
                             url: './start',
                             type: 'POST',
@@ -382,6 +376,84 @@
             calender.events();
         }
     };
+
+    var views = {
+        active: {
+            views: 'view--active',
+            nav: 'view-navigation-list-item--active'
+        },
+        get: {
+            views: function (str) {
+                return $('.view--' + str)
+            },
+            nav: function (str) {
+                return $('[data-set-view="' + str + '"]');
+            }
+        },
+        els: {
+            views: $('.view'),
+            nav: $('[data-set-view]')
+        },
+        fnAfter: {
+            start: function () {
+                scrollHandling.rebuild();
+                countUp.init();
+            }
+        },
+        loadView: function (sViewName, bCall, callback) {
+            var VIEW = views.get.views(sViewName),
+                getUrl = VIEW.attr('data-view');
+
+            $.ajax({
+                url: getUrl,
+                type: 'GET',
+                success: function (data) {
+                    var content = $('<div>').append(data).find('.body').html(),
+                        viewBody = $('<div>', {class: 'view-body', html: content});
+                    VIEW.append(viewBody);
+                    if (typeof views.fnAfter[sViewName] === 'function') {
+                        views.fnAfter[sViewName]();
+                    }
+                    if(bCall){
+                        callback();
+                    }
+                }
+            });
+        },
+        setView: function (str, bool, bForce, callback) {
+            var bLoadPage = bool === false ? false : true,
+                bForceLoad = bForce === true ? true : false,
+                sViewName = str,
+                bCall = typeof callback === 'function';
+            views.els.views.removeClass(views.active.views);
+            views.els.nav.parent().removeClass(views.active.nav);
+            views.get.views(sViewName).addClass(views.active.views);
+            views.get.nav(sViewName).parent().addClass(views.active.nav);
+
+
+            var viewBody = views.get.views(sViewName).find('.view-body'),
+                bLoaded = viewBody.length > 0;
+
+            if ((bLoadPage && !bLoaded) || bForceLoad){
+                console.log('remove',viewBody);
+                viewBody.addClass('www');
+                viewBody.remove();
+                views.loadView(sViewName, bCall, callback);
+            }
+        },
+        events: function () {
+            views.els.nav.on('click', function () {
+                views.setView($(this).attr('data-set-view'))
+            });
+        },
+        init: function () {
+            views.setView('start', false);
+            views.events();
+        }
+    };
+    window.view = views.setView;
+    views.init();
+
 
     login.init();
     window.postLog = postLog;
