@@ -514,7 +514,7 @@ class DefaultController extends Controller {
             $aParameters = array();
             foreach ( $oLog as $sKey => $sValue ) {
                 if ( $sValue instanceof \DateTime ) {
-                    $sValue = $sValue->format( "Y-m-d H:m:s" );
+                    $sValue = $sValue->format( "Y-m-d H:i:s" );
                 }
                 if ( $sKey != "link" && $sKey != "deleted" ) {
                     $aParameters[] = $sKey."=".(string)$sValue;

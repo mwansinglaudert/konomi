@@ -323,7 +323,7 @@ class EditController extends Controller {
             $aParameters = array();
             foreach ( $oTemplate as $sKey => $sValue ) {
                 if ( $sValue instanceof \DateTime ) {
-                    $sValue = $sValue->format( "Y-m-d H:m:s" );
+                    $sValue = $sValue->format( "Y-m-d H:i:s" );
                 }
                 if ( $sKey != "link" && $sKey != "deleted" ) {
                     $aParameters[] = $sKey."=".(string)$sValue;
