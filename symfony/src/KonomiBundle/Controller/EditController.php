@@ -107,11 +107,11 @@ class EditController extends Controller {
         $iType = $oRequest->request->get( "iType" );
         $sCreatestamp = $oRequest->request->get( "sCreatestamp" );
 
-        // Create createstamp
+        // Create 'create timestamp'
         $oCreationDateTime  = new \DateTime( $sCreatestamp );
         $oCreationDateTime->setTimezone( new \DateTimeZone($this->getParameter("date_time_zone")) );
 
-        // Create timestamp
+        // Create current timestamp
         $oDateTime  = new \DateTime( "now" );
         $oDateTime->setTimezone( new \DateTimeZone($this->getParameter("date_time_zone")) );
 
@@ -129,7 +129,7 @@ class EditController extends Controller {
             $oLog->setSum( $iSum );
             $oLog->setType( $iType );
             $oLog->setUser( $sUserName );
-            $oLog->setCreatestamp( $oDateTime );
+            $oLog->setCreatestamp( $oCreationDateTime );
             $oLog->setTimestamp( $oDateTime );
             $oLog->setDeleted( 0 );
 
