@@ -66,7 +66,7 @@ class LogRepository extends EntityRepository {
             ->setParameter( 'fromDate', $sFromDateStamp )
             ->setParameter( 'toDate', $sToDateStamp )
             ->setParameter( 'user', $oUser->getUsername() )
-            ->orderBy( 'e.timestamp', 'DESC' )
+            ->orderBy( 'e.createstamp', 'DESC' )
             ->addOrderBy( 'e.id', 'DESC' )
             ->getQuery();
         return $oQuery->getResult();
@@ -96,7 +96,7 @@ class LogRepository extends EntityRepository {
             ->setParameter( 'toDate', $sToDateStamp )
             ->setParameter( 'type', $iType )
             ->setParameter( 'user', $oUser->getUsername() )
-            ->orderBy( 'e.timestamp', 'DESC' )
+            ->orderBy( 'e.createstamp', 'DESC' )
             ->getQuery();
         return $oQuery->getResult();
     }
@@ -131,7 +131,7 @@ class LogRepository extends EntityRepository {
             ->setParameter( 'description', $sDescription )
             ->setParameter( 'type', $iType )
             ->setParameter( 'user', $oUser->getUsername() )
-            ->orderBy( 'e.timestamp', 'DESC' )
+            ->orderBy( 'e.createstamp', 'DESC' )
             ->getQuery();
         return $oQuery->getOneOrNullResult();
     }
