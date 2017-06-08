@@ -240,7 +240,7 @@
             <input type="hidden" name="delete" value="0">
             <div class="_scroll">
                 <h2 class="modal-headline">{{ ('app.label.log.code.' ~ variables.aParams.sCode)|trans }}
-                    <small>({{ variables.aParams.sCreatestamp|date("d-m-Y H:m:i") }})</small>
+                    <small>({{ variables.aParams.sCreatestamp|date("d-m-Y H:i:s") }})</small>
                 </h2>
                 <ul class="ios-list">
                     {% for sParam, sValue in variables.aParams %}
@@ -254,7 +254,7 @@
                                            value="{{ sValue }}">
                                     <span for="edit{{ sParam }}">
                                         {% if sParam == 'sSum' %}
-                                            {% trans %}app.label.sum{% endtrans %}{% trans %}app.currency{% endtrans %}
+                                            y{% trans %}app.currency{% endtrans %}
                                         {% elseif sParam == 'sDescription' %}
                                             {% trans %}app.label.description{% endtrans %}
                                         {% elseif sParam == 'sCreatestamp' %}
