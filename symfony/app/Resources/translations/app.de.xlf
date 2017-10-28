@@ -182,6 +182,14 @@
                 <source>app.label.log.code.lidl</source>
                 <target>Lidl</target>
             </trans-unit>
+            <trans-unit id="app.label.log.code.dm">
+                <source>app.label.log.code.dm</source>
+                <target>dm</target>
+            </trans-unit>
+            <trans-unit id="app.label.log.code.rossmann">
+                <source>app.label.log.code.rossmann</source>
+                <target>Rossmann</target>
+            </trans-unit>
             <trans-unit id="app.label.log.code.drugs">
                 <source>app.label.log.code.drugs</source>
                 <target>Medizin</target>
